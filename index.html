@@ -1,15 +1,542 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Memory, Know Your PLACE</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: #222;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* =========================
+       HEADER
+       ========================= */
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      line-height: 1.2;
+      margin: 0 auto 24px;
+      max-width: 1000px;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .authors {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+
+    .affiliation {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .contact-note {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 28px;
+    }
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 7px;
+      text-decoration: none;
+      color: #fff;
+      background: #222;
+      font-size: 0.95rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .button:hover {
+      opacity: 0.8;
+    }
+
+    /* =========================
+       SECTIONS
+       ========================= */
+
+    section {
+      margin-top: 65px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 22px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 1.02rem;
+    }
+
+    /* =========================
+       TLDR
+       ========================= */
+
+    .tldr {
+      background: #f6f6f6;
+      border-radius: 10px;
+      padding: 24px 28px;
+      font-size: 1.08rem;
+    }
+
+    .tldr strong {
+      font-weight: 700;
+    }
+
+    /* =========================
+       PLACEHOLDER IMAGES
+       ========================= */
+
+    .image-placeholder {
+      width: 100%;
+      min-height: 380px;
+      background: #f4f4f4;
+      border: 2px dashed #bbb;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-size: 1rem;
+    }
+
+    .framework-placeholder {
+      min-height: 480px;
+    }
+
+    /* =========================
+       FINDINGS
+       ========================= */
+
+    .finding {
+      margin-bottom: 65px;
+    }
+
+    .finding-number {
+      color: #777;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .finding h3 {
+      font-size: 1.4rem;
+      margin-top: 5px;
+    }
+
+    .finding-description {
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    /* =========================
+       BIBTEX
+       ========================= */
+
+    pre {
+      background: #f5f5f5;
+      padding: 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer {
+      margin-top: 80px;
+      padding-top: 25px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 40px 18px 60px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .authors {
+        font-size: 1.1rem;
+      }
+
+      .image-placeholder {
+        min-height: 260px;
+      }
+
+      .framework-placeholder {
+        min-height: 320px;
+      }
+    }
+  </style>
 </head>
 
-<body>
-  <h1>Memory, Know Your PLACE</h1>
 
-  <p>
-    Governing Lifecycle State and Query-Time Eligibility
-    in Persistent-Memory Agents
-  </p>
+<body>
+
+<div class="container">
+
+  <!-- =====================================================
+       TITLE
+       ===================================================== -->
+
+  <header class="header">
+
+    <h1>
+      Memory, Know Your PLACE:
+      Governing Lifecycle State and Query-Time Eligibility
+      in Persistent-Memory Agents
+    </h1>
+
+    <div class="authors">
+      Chen-Fang Hu,
+      Hong-Han Shuai<sup>*</sup>,
+      Woan-Shiuan Chien<sup>*</sup>
+    </div>
+
+    <div class="affiliation">
+      National Yang Ming Chiao Tung University
+    </div>
+
+    <div class="contact-note">
+      <sup>*</sup> Contact author
+    </div>
+
+    <div class="buttons">
+
+      <!-- Replace # with the actual paper URL -->
+      <a class="button" href="#" target="_blank">
+        Paper
+      </a>
+
+      <!-- Replace # with the actual GitHub repository URL -->
+      <a class="button" href="#" target="_blank">
+        GitHub
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       TL;DR
+       ===================================================== -->
+
+  <section>
+
+    <h2>TL;DR</h2>
+
+    <div class="tldr">
+
+      <strong>PLACEHOLDER TL;DR.</strong>
+
+      Write approximately 2–4 sentences here summarizing the central
+      problem, what PLACE does, and the main empirical takeaway.
+
+      For example:
+
+      [Problem with persistent-memory agents.]
+      [Core idea behind PLACE.]
+      [What CSS controls.]
+      [What QASC controls.]
+      [Most important experimental result.]
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FRAMEWORK
+       ===================================================== -->
+
+  <section>
+
+    <h2>Framework</h2>
+
+    <p>
+      PLACEHOLDER FRAMEWORK DESCRIPTION.
+      Briefly introduce PLACE and explain what the reader should notice
+      in the framework figure.
+    </p>
+
+    <div class="image-placeholder framework-placeholder">
+      FRAMEWORK IMAGE PLACEHOLDER
+      <br><br>
+      Replace this box with your PLACE framework figure.
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MAIN FINDINGS
+       ===================================================== -->
+
+  <section>
+
+    <h2>Main Findings</h2>
+
+
+    <!-- ================= FINDING 1 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 1
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 1 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 1 DESCRIPTION.
+        Explain the result and the main interpretation in approximately
+        2–4 sentences.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 1 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 2 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 2
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 2 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 2 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 2 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 3 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 3
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 3 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 3 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 3 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 4 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 4
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 4 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 4 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 4 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 5 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 5
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 5 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 5 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 5 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 6 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 6
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 6 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 6 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 6 PLACEHOLDER
+      </div>
+
+    </div>
+
+
+    <!-- ================= FINDING 7 ================= -->
+
+    <div class="finding">
+
+      <div class="finding-number">
+        Finding 7
+      </div>
+
+      <h3>
+        PLACEHOLDER FINDING 7 TITLE
+      </h3>
+
+      <p class="finding-description">
+        PLACEHOLDER FINDING 7 DESCRIPTION.
+      </p>
+
+      <div class="image-placeholder">
+        RESULT IMAGE / TABLE 7 PLACEHOLDER
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BIBTEX
+       ===================================================== -->
+
+  <section>
+
+    <h2>Citation</h2>
+
+    <p>
+      If you find this work useful, please consider citing:
+    </p>
+
+    <pre>
+@inproceedings{memoryknowyourplace2026,
+  title     = {Memory, Know Your PLACE: Governing Lifecycle State and
+               Query-Time Eligibility in Persistent-Memory Agents},
+  author    = {PLACEHOLDER AUTHORS},
+  booktitle = {PLACEHOLDER VENUE},
+  year      = {PLACEHOLDER YEAR}
+}
+    </pre>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer>
+    Memory, Know Your PLACE · National Yang Ming Chiao Tung University
+  </footer>
+
+</div>
+
 </body>
 </html>
