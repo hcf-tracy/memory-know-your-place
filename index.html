@@ -1,13 +1,13 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Memory, Know Your PLACE: Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents. Research project, methodology, results, and supplementary analyses.">
-  <meta name="color-scheme" content="light">
-  <title>Memory, Know Your PLACE | Research Project</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Memory, Know Your PLACE: research framework and empirical findings on persistent memory state correctness and query authorization." name="description"/>
+<meta content="light" name="color-scheme"/>
+<title>Memory, Know Your PLACE | Research Project</title>
+<style>
     :root {
       --ink: #20232a;
       --muted: #565e69;
@@ -122,199 +122,164 @@
       .finding { margin-top: 34px; padding-bottom: 28px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
-  </style>
+  
+/* Layout and typography adjustments for complete research tables */
+:root { --page-width: 1120px; }
+html, body { overflow-x: clip; }
+.section-lede { max-width: 850px; }
+.table-heading { margin: 28px 0 13px; font-weight: 760; font-size: 1.08rem; }
+.table-wrap { margin: 19px 0 10px; width: 100%; overflow: visible; }
+.research-table { width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; font-size: .87rem; }
+.research-table th, .research-table td { overflow-wrap: anywhere; word-break: normal; white-space: normal; line-height: 1.4; text-align: right; vertical-align: top; padding: 11px 9px; }
+.research-table th:first-child, .research-table td:first-child { text-align: left; width: 23%; }
+.research-table thead th { font-size: .78rem; }
+.research-table .emphasis-row { background: #f8f9fa; }
+.research-table tbody th { font-weight: 580; }
+.research-table tbody tr.emphasis-row th { font-weight: 740; }
+.finding-description { max-width: 980px; }
+.table-heading+.table-wrap { margin-top: 6px; }
+.caption { max-width: 1010px; line-height: 1.5; }
+#finding-5 .research-table { font-size: .82rem; }
+#finding-5 .research-table th:first-child { width: 28%; }
+#finding-7 .research-table { font-size: .81rem; }
+#finding-7 .research-table th:first-child { width: 22%; }
+#finding-6 .research-table th:first-child { width: 31%; }
+#citation pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.project-url { overflow-wrap: anywhere; font-size: .87rem; color: var(--muted); }
+@media (max-width: 780px) {
+  .research-table { font-size: .81rem; }
+  .research-table th,.research-table td { padding: 9px 6px; }
+}
+@media (max-width: 650px) {
+  .research-table { display: block; width: 100%; }
+  .research-table thead { display: none; }
+  .research-table tbody { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .research-table tr { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: #fff; }
+  .research-table tr.emphasis-row { background: #f8f9fa; }
+  .research-table th:first-child, .research-table td:first-child { width: 100%; }
+  .research-table tbody th:first-child { grid-column: 1 / -1; display: block; padding: 11px 12px; background: #f5f6f7; border-bottom: 1px solid var(--line); font-size: .94rem; font-weight: 730; text-align: left; }
+  .research-table tbody th:first-child::before { display: none; }
+  .research-table tbody td { display: flex; flex-direction: column; min-width: 0; align-items: flex-start; text-align: left; gap: 4px; padding: 10px 12px; border-bottom: 1px solid #eef0f1; font-size: .92rem; font-variant-numeric: tabular-nums; }
+  .research-table tbody td::before { content: attr(data-label); color: var(--muted); font-size: .73rem; font-weight: 650; line-height: 1.3; overflow-wrap: anywhere; }
+  .research-table tbody td:last-child { border-bottom: 0; }
+  .table-wrap { overflow: visible; }
+  .table-heading { margin-top: 26px; }
+  .finding { margin-bottom: 40px; }
+  #citation pre { font-size: .75rem; }
+}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="container" id="top">
-  <nav class="topnav" aria-label="Page navigation">
-    <a href="#overview">Overview</a>
-    <a href="#contributions">Contributions</a>
-    <a href="#framework">Framework</a>
-    <a href="#findings">Findings</a>
-    <a href="#citation">Citation</a>
-  </nav>
+<nav aria-label="Page navigation" class="topnav"><a href="#overview">Overview</a><a href="#contributions">Contributions</a><a href="#framework">Framework</a><a href="#findings">Results</a><a href="#citation">Citation</a></nav>
+<header class="header">
+<h1>Memory, Know Your PLACE:<span class="subtitle">Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents</span></h1>
+<p class="authors"><strong>Chen-Fang Hu</strong><sup>1</sup>, <strong>Hong-Han Shuai</strong><sup>2,*</sup>, <strong>Woan-Shiuan Chien</strong><sup>2,*</sup></p>
+<p class="affiliations"><sup>1</sup>Arête Honors Program  ·  <sup>2</sup>Institute of Electrical and Computer Engineering<br/>National Yang Ming Chiao Tung University, Taiwan</p>
+<p class="contact-note"><sup>*</sup>Corresponding authors</p>
+<div aria-label="Project resources" class="buttons"><a class="button" href="assets/PLACE_Paper.pdf" rel="noopener noreferrer" target="_blank">Paper</a>
+<a class="button secondary" href="https://github.com/REPLACE_WITH_YOUR_CODE_REPOSITORY" rel="noopener noreferrer" target="_blank">GitHub Code</a>
+<a class="button secondary" href="#citation">Citation</a></div>
+</header>
+<main id="main">
+<section aria-labelledby="overview-title" id="overview">
+<h2 id="overview-title">TL;DR</h2>
+<div class="tldr"><p>An agent can remember an outdated fact or let information that is no longer eligible shape its answer. <span class="keyword">PLACE</span> governs both problems by separating <span class="keyword">state correctness</span> from <span class="keyword">influence correctness</span>. Across two model scales, PLACE maintains StateCorrectness of <strong>1.000</strong>, reduces measured causal LeakageRate to <strong>0.000</strong> in the state correct comparison, and achieves the highest <strong>JointSuccess</strong>.</p></div>
+</section>
+<section aria-labelledby="abstract-title" id="abstract">
+<h2 id="abstract-title">Abstract</h2>
+<p class="abstract">Persistent memory turns prior interactions into durable agent state, but existing systems provide limited control over whether that state remains valid and whether it should influence a later query. We argue that reliable memory requires governance over both state formation and query-time influence. We introduce <strong>PLACE</strong>, a factorized governance layer that adds write-side state certification and read-side authorization to a memory backend. A factorial evaluation on Mem0 with Qwen2.5-3B and Qwen2.5-7B isolates the contribution of each mechanism. Results show that write-side governance substantially improves lifecycle state correctness, while read-side governance eliminates measured causal leakage from ineligible memory in the state-correct setting. Their combination achieves the strongest joint performance while preserving query-relevant support. These findings show that reliable persistent memory requires explicit control over both maintained state and query-time information influence.</p>
+</section>
+<section aria-labelledby="contributions-title" id="contributions">
+<h2 id="contributions-title">Key Contributions</h2>
+<ul class="contributions">
+<li><strong>Two distinct governance goals.</strong> State correctness requires that persistent memory reflect the currently valid facts. Influence correctness determines which stored facts may affect a particular answer.</li>
+<li><strong>Certifying Write Side State (CSS).</strong> CSS applies trusted user events, updates persistent memory, and verifies the resulting state through physical readback.</li>
+<li><strong>Query Authorized Semantic Closure (QASC).</strong> QASC constructs authorized support from stored evidence without changing memory or creating facts that are absent.</li>
+<li><strong>Controlled validation.</strong> A factorial comparison isolates writing and reading, with separate tests for causal leakage, query utility, continued dialogue, and semantic interpretation.</li></ul>
+</section>
+<section aria-labelledby="framework-title" id="framework">
+<h2 id="framework-title">Framework</h2>
+<p><span class="keyword">PLACE</span> places two controls around an existing memory backend. <span class="keyword">CSS</span> governs how current facts are stored. <span class="keyword">QASC</span> governs which of those facts may reach the answer model for a given query. Neither requires replacing the memory backend or the answer model.</p>
+<p>In the example, a flight departure changes from 9:00 to 11:00. CSS records and verifies 11:00 as the current departure. QASC permits the current time and its provenance while excluding the superseded value from the answer context.</p>
+<figure class="framework-figure">
+<div class="figure-frame"><img alt="PLACE framework. Trusted user events go through CSS to update and verify the memory state; trusted query events go through QASC to select authorized support. A Tokyo departure changes from 9:00 to 11:00, with the superseded time filtered before answer generation." height="654" loading="lazy" src="assets/place-framework.webp" width="1600"/></div>
+<figcaption>PLACE separates the maintenance of physical memory from the authorization of memory used to answer a query. <a href="assets/place-framework.pdf" rel="noopener noreferrer" target="_blank">View framework figure as PDF</a>.</figcaption>
+</figure>
+</section>
 
-  <header class="header">
-    <h1>Memory, Know Your PLACE:<span class="subtitle">Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents</span></h1>
-    <p class="authors"><strong>Chen-Fang Hu</strong><sup>1</sup>, <strong>Hong-Han Shuai</strong><sup>2,*</sup>, <strong>Woan-Shiuan Chien</strong><sup>2,*</sup></p>
-    <p class="affiliations"><sup>1</sup>Arête Honors Program &nbsp;·&nbsp; <sup>2</sup>Institute of Electrical and Computer Engineering<br>National Yang Ming Chiao Tung University, Taiwan</p>
-    <p class="contact-note"><sup>*</sup>Corresponding authors</p>
-    <div class="buttons" aria-label="Project resources">
-      <!-- Replace this comment with an actual paper link once publicly available:
-           <a class="button" href="https://YOUR_VERIFIED_PAPER_URL" target="_blank" rel="noopener noreferrer">Paper</a>
-      -->
-      <!-- Replace this comment with the verified public source repository URL:
-           <a class="button" href="https://github.com/YOUR_ACCOUNT/YOUR_REPOSITORY" target="_blank" rel="noopener noreferrer">Code</a>
-      -->
-      <a class="button" href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">Supplementary PDF</a>
-      <a class="button secondary" href="#citation">Citation</a>
-    </div>
-  </header>
+<section aria-labelledby="findings-title" id="findings">
+<h2 id="findings-title">Main Findings</h2>
+<article class="finding" id="finding-1">
+<div class="finding-number">Finding 01 · Writing governance</div>
+<h3>Governing writes restores correct memory state</h3>
+<p class="finding-description">The governed writer improves <span class="keyword">StateCorrectness</span> from <strong>0.488 to 1.000</strong> for Qwen2.5 7B and from <strong>0.414 to 1.000</strong> for 3B. Native and QASC use the same Native state producer; CSS and PLACE use the same governed producer. The result isolates the benefit of controlling state formation instead of relying on retrieval to compensate for incorrect memory.</p>
+<div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and condition</th><th scope="col">StateCorrectness</th><th scope="col">LeakageRate</th><th scope="col">AnswerCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr><th data-label="Model and condition" scope="row">7B · Native</th><td data-label="StateCorrectness">0.488</td><td data-label="LeakageRate">0.071</td><td data-label="AnswerCorrectness">0.682</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Model and condition" scope="row">7B · CSS</th><td data-label="StateCorrectness">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.793</td><td data-label="JointSuccess">0.417</td></tr><tr><th data-label="Model and condition" scope="row">7B · QASC</th><td data-label="StateCorrectness">0.488</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.653</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">7B · PLACE</th><td data-label="StateCorrectness">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.713</td><td data-label="JointSuccess">0.667</td></tr><tr><th data-label="Model and condition" scope="row">3B · Native</th><td data-label="StateCorrectness">0.414</td><td data-label="LeakageRate">0.071</td><td data-label="AnswerCorrectness">0.451</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Model and condition" scope="row">3B · CSS</th><td data-label="StateCorrectness">1.000</td><td data-label="LeakageRate">0.083</td><td data-label="AnswerCorrectness">0.618</td><td data-label="JointSuccess">0.354</td></tr><tr><th data-label="Model and condition" scope="row">3B · QASC</th><td data-label="StateCorrectness">0.414</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.410</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">3B · PLACE</th><td data-label="StateCorrectness">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.654</td><td data-label="JointSuccess">0.625</td></tr></tbody></table></div>
 
-  <main id="main">
-    <section id="overview" aria-labelledby="overview-title">
-      <h2 id="overview-title">TL;DR</h2>
-      <div class="tldr">
-        <p>Persistent memory can store the wrong current facts—or expose correctly stored facts that should not affect a particular query. <span class="keyword">PLACE</span> separates <span class="keyword">state correctness</span> from <span class="keyword">influence correctness</span> with a write-side certification mechanism and a read-side authorization mechanism. In a controlled Mem0 evaluation, PLACE achieves <strong>1.000 StateCorrectness</strong>, <strong>zero measured causal leakage</strong> in the state-correct paired comparison, and <strong>0.667 / 0.625 JointSuccess</strong> on Qwen2.5-7B / 3B.</p>
-      </div>
-    </section>
+</article>
+<article class="finding" id="finding-2">
+<div class="finding-number">Finding 02 · Reading governance</div>
+<h3>Authorizing reads prevents measured causal leakage</h3>
+<p class="finding-description">When the authorized state is reference correct, replacing Native reading with <span class="keyword">QASC</span> reduces measured <span class="keyword">LeakageRate</span> from <strong>0.125 to 0.000</strong> at 7B and from <strong>0.083 to 0.000</strong> at 3B. These comparisons isolate memory influence rather than errors in the stored state.</p>
+<div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model</th><th scope="col">CSS leakage</th><th scope="col">PLACE leakage</th><th scope="col">LeakageDrop</th><th scope="col">95% interval</th></tr></thead><tbody><tr><th data-label="Model" scope="row">7B</th><td data-label="CSS leakage">0.125</td><td data-label="PLACE leakage">0.000</td><td data-label="LeakageDrop">0.125</td><td data-label="95% interval">[0.042, 0.229]</td></tr><tr><th data-label="Model" scope="row">3B</th><td data-label="CSS leakage">0.083</td><td data-label="PLACE leakage">0.000</td><td data-label="LeakageDrop">0.083</td><td data-label="95% interval">[0.021, 0.167]</td></tr></tbody></table></div>
 
-    <section id="abstract" aria-labelledby="abstract-title">
-      <h2 id="abstract-title">Abstract</h2>
-      <p class="abstract">Persistent memory turns prior interactions into durable agent state, but existing systems provide limited control over whether that state remains valid and whether it should influence a later query. We argue that reliable memory requires governance over both state formation and query-time influence. We introduce <strong>PLACE</strong>, a factorized governance layer that adds write-side state certification and read-side authorization to a memory backend. A factorial evaluation on Mem0 with Qwen2.5-3B and Qwen2.5-7B isolates the contribution of each mechanism. Results show that write-side governance substantially improves lifecycle state correctness, while read-side governance eliminates measured causal leakage from ineligible memory in the state-correct setting. Their combination achieves the strongest joint performance while preserving query-relevant support. These findings show that reliable persistent memory requires explicit control over both maintained state and query-time information influence.</p>
-    </section>
+</article>
+<article class="finding" id="finding-3">
+<div class="finding-number">Finding 03 · Factorial combination</div>
+<h3>Together, both controls improve joint governance success</h3>
+<p class="finding-description">PLACE has the highest <span class="keyword">JointSuccess</span> at both model scales: <strong>0.667</strong> at 7B and <strong>0.625</strong> at 3B. Its read and write controls are complementary, though PLACE does not necessarily produce the highest AnswerCorrectness. At 7B, CSS achieves 0.793 AnswerCorrectness compared with PLACE at 0.713.</p>
+<div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and effect</th><th scope="col">Estimate</th><th scope="col">Interval</th></tr></thead><tbody><tr><th data-label="Model and effect" scope="row">7B · StateGain</th><td data-label="Estimate">0.512</td><td data-label="Interval">[0.447, 0.599]</td></tr><tr><th data-label="Model and effect" scope="row">7B · LeakageDrop</th><td data-label="Estimate">0.125</td><td data-label="Interval">[0.042, 0.229]</td></tr><tr><th data-label="Model and effect" scope="row">7B · JointGain</th><td data-label="Estimate">0.667</td><td data-label="Interval">[0.610, 0.964]</td></tr><tr><th data-label="Model and effect" scope="row">7B · InteractionGain</th><td data-label="Estimate">0.250</td><td data-label="Interval">[0.060, 0.377]</td></tr><tr><th data-label="Model and effect" scope="row">3B · StateGain</th><td data-label="Estimate">0.586</td><td data-label="Interval">[0.539, 0.660]</td></tr><tr><th data-label="Model and effect" scope="row">3B · LeakageDrop</th><td data-label="Estimate">0.083</td><td data-label="Interval">[0.021, 0.167]</td></tr><tr><th data-label="Model and effect" scope="row">3B · JointGain</th><td data-label="Estimate">0.625</td><td data-label="Interval">[0.592, 0.917]</td></tr><tr><th data-label="Model and effect" scope="row">3B · InteractionGain</th><td data-label="Estimate">0.271</td><td data-label="Interval">[0.069, 0.377]</td></tr></tbody></table></div>
 
-    <section id="contributions" aria-labelledby="contributions-title">
-      <h2 id="contributions-title">Key Contributions</h2>
-      <ul class="contributions">
-        <li><strong>Two complementary governance requirements.</strong> We distinguish whether persistent memory represents the correct current semantic state from whether represented memory is eligible to influence a specific query.</li>
-        <li><strong>Certifying Write-Side State (CSS).</strong> A governed transition uses trusted user-level events to update the memory backend and verifies the resulting state through physical readback.</li>
-        <li><strong>Query-Authorized Semantic Closure (QASC).</strong> A read-only authorization layer constructs query-eligible, model-visible support from physically represented memory; it does not invent missing facts or rewrite storage.</li>
-        <li><strong>Controlled factorial evaluation.</strong> We isolate write-side and read-side effects across two model sizes, six governance families, paired causal worlds, and targeted utility and Closed-Loop diagnostics.</li>
-      </ul>
-    </section>
+</article>
+<article class="finding" id="finding-4">
+<div class="finding-number">Finding 04 · Targeted diagnostics</div>
+<h3>Needed support remains available in continued dialogue</h3>
+<p class="finding-description">PLACE maintains <strong>1.000 NeededSupport</strong> and <strong>0.000 ExposureRate</strong> on the applicable Utility evaluation at both model scales. In <span class="keyword">Closed Loop</span>, prior assistant responses remain part of the dialogue but do not become authoritative memory. PLACE preserves StateCorrectness of 1.000, with JointSuccess of 0.667 at 7B and 0.458 at 3B.</p>
+<h4 class="table-heading">A. Read Side Utility</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and condition</th><th scope="col">NeededSupport</th><th scope="col">ExposureRate</th><th scope="col">ConflictHarm</th></tr></thead><tbody><tr><th data-label="Model and condition" scope="row">7B · Native</th><td data-label="NeededSupport">0.200</td><td data-label="ExposureRate">0.292</td><td data-label="ConflictHarm">0.125</td></tr><tr><th data-label="Model and condition" scope="row">7B · CSS</th><td data-label="NeededSupport">0.667</td><td data-label="ExposureRate">0.417</td><td data-label="ConflictHarm">0.000</td></tr><tr><th data-label="Model and condition" scope="row">7B · QASC</th><td data-label="NeededSupport">0.200</td><td data-label="ExposureRate">0.000</td><td data-label="ConflictHarm">0.042</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">7B · PLACE</th><td data-label="NeededSupport">1.000</td><td data-label="ExposureRate">0.000</td><td data-label="ConflictHarm">0.042</td></tr><tr><th data-label="Model and condition" scope="row">3B · Native</th><td data-label="NeededSupport">0.133</td><td data-label="ExposureRate">0.250</td><td data-label="ConflictHarm">0.042</td></tr><tr><th data-label="Model and condition" scope="row">3B · CSS</th><td data-label="NeededSupport">0.667</td><td data-label="ExposureRate">0.417</td><td data-label="ConflictHarm">0.000</td></tr><tr><th data-label="Model and condition" scope="row">3B · QASC</th><td data-label="NeededSupport">0.133</td><td data-label="ExposureRate">0.000</td><td data-label="ConflictHarm">0.000</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">3B · PLACE</th><td data-label="NeededSupport">1.000</td><td data-label="ExposureRate">0.000</td><td data-label="ConflictHarm">0.000</td></tr></tbody></table></div>
+<h4 class="table-heading">B. Closed Loop</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and condition</th><th scope="col">StateCorrectness</th><th scope="col">ExposureRate</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr><th data-label="Model and condition" scope="row">7B · Native</th><td data-label="StateCorrectness">0.488</td><td data-label="ExposureRate">0.292</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Model and condition" scope="row">7B · CSS</th><td data-label="StateCorrectness">1.000</td><td data-label="ExposureRate">0.354</td><td data-label="JointSuccess">0.417</td></tr><tr><th data-label="Model and condition" scope="row">7B · QASC</th><td data-label="StateCorrectness">0.488</td><td data-label="ExposureRate">0.000</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">7B · PLACE</th><td data-label="StateCorrectness">1.000</td><td data-label="ExposureRate">0.000</td><td data-label="JointSuccess">0.667</td></tr><tr><th data-label="Model and condition" scope="row">3B · Native</th><td data-label="StateCorrectness">0.418</td><td data-label="ExposureRate">0.229</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Model and condition" scope="row">3B · CSS</th><td data-label="StateCorrectness">1.000</td><td data-label="ExposureRate">0.375</td><td data-label="JointSuccess">0.354</td></tr><tr><th data-label="Model and condition" scope="row">3B · QASC</th><td data-label="StateCorrectness">0.418</td><td data-label="ExposureRate">0.000</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">3B · PLACE</th><td data-label="StateCorrectness">1.000</td><td data-label="ExposureRate">0.000</td><td data-label="JointSuccess">0.458</td></tr></tbody></table></div>
 
-    <section id="framework" aria-labelledby="framework-title">
-      <h2 id="framework-title">Framework</h2>
-      <p>PLACE is a lightweight governance layer around an existing persistent-memory backend. <span class="keyword">CSS</span> governs which state should be current and verifies what is actually stored; <span class="keyword">QASC</span> determines which physically supported facts are authorized for the current query. Both mechanisms operate separately from the answer model.</p>
-      <p>In the example below, a flight originally scheduled for 9:00 is changed to 11:00. CSS marks 11:00 as current. QASC permits the current time and relevant provenance to reach the answer model, while filtering the superseded 9:00 value from a current-time response.</p>
-      <figure class="framework-figure">
-        <div class="figure-frame"><img src="assets/place-framework.webp" alt="PLACE framework. Trusted user events go through CSS to update and verify the memory state; trusted query events go through QASC to select authorized support. A Tokyo departure changes from 9:00 to 11:00, with the superseded time filtered before answer generation." width="1600" height="654" loading="lazy"></div>
-        <figcaption>PLACE separates write-side lifecycle state formation from read-side query-time influence. <a href="assets/place-framework.pdf" target="_blank" rel="noopener noreferrer">View full-resolution framework figure (PDF)</a>.</figcaption>
-      </figure>
-    </section>
+</article>
+<article class="finding" id="finding-5">
+<div class="finding-number">Finding 05 · Governance family results</div>
+<h3>The joint benefit extends across governance families</h3>
+<p class="finding-description">Across supersession, scope, permission, authority, dependency, and epistemic governance, PLACE maintains State@Query F1 of 1.000 and measured LeakageRate of 0.000. JointSuccess remains positive in every family, but dependency is the most difficult, particularly for the smaller model.</p>
+<h4 class="table-heading">Qwen2.5 7B</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Family and condition</th><th scope="col">State@Query F1</th><th scope="col">LeakageRate</th><th scope="col">AnswerCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr><th data-label="Family and condition" scope="row">Supersession · Native</th><td data-label="State@Query F1">0.454</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.708</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Supersession · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">1.000</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Family and condition" scope="row">Supersession · QASC</th><td data-label="State@Query F1">0.454</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.542</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Supersession · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.875</td><td data-label="JointSuccess">0.875</td></tr><tr><th data-label="Family and condition" scope="row">Scope · Native</th><td data-label="State@Query F1">0.418</td><td data-label="LeakageRate">0.333</td><td data-label="AnswerCorrectness">0.833</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Scope · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.833</td><td data-label="JointSuccess">0.375</td></tr><tr><th data-label="Family and condition" scope="row">Scope · QASC</th><td data-label="State@Query F1">0.418</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Scope · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.850</td><td data-label="JointSuccess">0.625</td></tr><tr><th data-label="Family and condition" scope="row">Permission · Native</th><td data-label="State@Query F1">0.436</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Permission · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.250</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.625</td></tr><tr><th data-label="Family and condition" scope="row">Permission · QASC</th><td data-label="State@Query F1">0.436</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Permission · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.750</td></tr><tr><th data-label="Family and condition" scope="row">Authority · Native</th><td data-label="State@Query F1">0.441</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Authority · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.625</td></tr><tr><th data-label="Family and condition" scope="row">Authority · QASC</th><td data-label="State@Query F1">0.441</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Authority · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.625</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · Native</th><td data-label="State@Query F1">0.413</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.550</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.550</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · QASC</th><td data-label="State@Query F1">0.413</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.375</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Dependency · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.425</td><td data-label="JointSuccess">0.375</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · Native</th><td data-label="State@Query F1">0.419</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.875</td><td data-label="JointSuccess">0.375</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · QASC</th><td data-label="State@Query F1">0.419</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Epistemic · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.750</td></tr></tbody></table></div><h4 class="table-heading">Qwen2.5 3B</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Family and condition</th><th scope="col">State@Query F1</th><th scope="col">LeakageRate</th><th scope="col">AnswerCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr><th data-label="Family and condition" scope="row">Supersession · Native</th><td data-label="State@Query F1">0.392</td><td data-label="LeakageRate">0.250</td><td data-label="AnswerCorrectness">0.583</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Supersession · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.875</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Family and condition" scope="row">Supersession · QASC</th><td data-label="State@Query F1">0.392</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.708</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Supersession · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">1.000</td><td data-label="JointSuccess">0.875</td></tr><tr><th data-label="Family and condition" scope="row">Scope · Native</th><td data-label="State@Query F1">0.353</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Scope · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.708</td><td data-label="JointSuccess">0.375</td></tr><tr><th data-label="Family and condition" scope="row">Scope · QASC</th><td data-label="State@Query F1">0.353</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.125</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Scope · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.625</td></tr><tr><th data-label="Family and condition" scope="row">Permission · Native</th><td data-label="State@Query F1">0.367</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.625</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Permission · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.125</td><td data-label="AnswerCorrectness">0.500</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Family and condition" scope="row">Permission · QASC</th><td data-label="State@Query F1">0.367</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.875</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Permission · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.750</td></tr><tr><th data-label="Family and condition" scope="row">Authority · Native</th><td data-label="State@Query F1">0.367</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.375</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Authority · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.750</td></tr><tr><th data-label="Family and condition" scope="row">Authority · QASC</th><td data-label="State@Query F1">0.367</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.375</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Authority · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.750</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · Native</th><td data-label="State@Query F1">0.343</td><td data-label="LeakageRate">N/A</td><td data-label="AnswerCorrectness">0.250</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.125</td><td data-label="JointSuccess">0.125</td></tr><tr><th data-label="Family and condition" scope="row">Dependency · QASC</th><td data-label="State@Query F1">0.343</td><td data-label="LeakageRate">N/A</td><td data-label="AnswerCorrectness">0.000</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Dependency · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.300</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · Native</th><td data-label="State@Query F1">0.346</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.250</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · CSS</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.250</td><td data-label="AnswerCorrectness">0.750</td><td data-label="JointSuccess">0.375</td></tr><tr><th data-label="Family and condition" scope="row">Epistemic · QASC</th><td data-label="State@Query F1">0.346</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.375</td><td data-label="JointSuccess">0.000</td></tr><tr class="emphasis-row"><th data-label="Family and condition" scope="row">Epistemic · PLACE</th><td data-label="State@Query F1">1.000</td><td data-label="LeakageRate">0.000</td><td data-label="AnswerCorrectness">0.500</td><td data-label="JointSuccess">0.500</td></tr></tbody></table></div>
 
-    <section id="evaluation" aria-labelledby="evaluation-title">
-      <h2 id="evaluation-title">Evaluation at a Glance</h2>
-      <p>The evaluation crosses two write policies (Native and CSS) with two read policies (Native and QASC), yielding four conditions: <strong>Native</strong>, <strong>CSS</strong>, <strong>QASC</strong>, and <strong>PLACE</strong>. Primary experiments use trusted event and query semantics so governance can be evaluated independently of automatic semantic interpretation.</p>
-      <div class="setup-grid" aria-label="Experimental scope">
-        <div class="setup-item"><span class="setup-value">302</span><span class="setup-label">interaction turns</span></div>
-        <div class="setup-item"><span class="setup-value">4</span><span class="setup-label">conversation blocks in one trajectory</span></div>
-        <div class="setup-item"><span class="setup-value">105</span><span class="setup-label">post-event state checkpoints</span></div>
-        <div class="setup-item"><span class="setup-value">48</span><span class="setup-label">Primary queries; 48 causal pairs evaluated separately</span></div>
-      </div>
-      <p class="small muted">Models: Qwen2.5-7B and Qwen2.5-3B. Backend: Mem0 with Qdrant. The six governance families are supersession, scope, permission, authority, dependency, and epistemic state. The controlled experiments comprise one prespecified longitudinal trajectory, not multiple independent trajectories.</p>
-    </section>
+</article>
+<article class="finding" id="finding-6">
+<div class="finding-number">Finding 06 · Automatic parsing</div>
+<h3>Automatic semantic interpretation remains a bottleneck</h3>
+<p class="finding-description">The Primary study uses trusted event and query semantics to isolate governance. A separate parser diagnostic shows why automated interpretation remains difficult. When parsed events replace trusted events, support correctness falls substantially, even where the overall state F1 stays close to 1.000. These results should not be interpreted as performance of the controlled Primary configuration.</p>
+<h4 class="table-heading">A. Automatic Parser Quality</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Metric</th><th scope="col">7B</th><th scope="col">3B</th></tr></thead><tbody><tr><th data-label="Metric" scope="row">Event field F1</th><td data-label="7B">0.776</td><td data-label="3B">0.456</td></tr><tr><th data-label="Metric" scope="row">Query field F1</th><td data-label="7B">0.468</td><td data-label="3B">0.259</td></tr><tr><th data-label="Metric" scope="row">Transition agreement</th><td data-label="7B">0.583</td><td data-label="3B">0.000</td></tr></tbody></table></div><h4 class="table-heading">B. Downstream Sensitivity · Qwen2.5 7B</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Inputs</th><th scope="col">StateCorrectness</th><th scope="col">SupportCorrectness</th><th scope="col">AnswerCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr class="emphasis-row"><th data-label="Inputs" scope="row">TT · Trusted event, trusted query</th><td data-label="StateCorrectness">1.000</td><td data-label="SupportCorrectness">1.000</td><td data-label="AnswerCorrectness">0.361</td><td data-label="JointSuccess">0.333</td></tr><tr><th data-label="Inputs" scope="row">PT · Parsed event, trusted query</th><td data-label="StateCorrectness">0.985</td><td data-label="SupportCorrectness">0.329</td><td data-label="AnswerCorrectness">0.375</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Inputs" scope="row">TP · Trusted event, parsed query</th><td data-label="StateCorrectness">1.000</td><td data-label="SupportCorrectness">0.502</td><td data-label="AnswerCorrectness">0.250</td><td data-label="JointSuccess">0.250</td></tr><tr><th data-label="Inputs" scope="row">PP · Parsed event, parsed query</th><td data-label="StateCorrectness">0.985</td><td data-label="SupportCorrectness">0.250</td><td data-label="AnswerCorrectness">0.250</td><td data-label="JointSuccess">0.000</td></tr></tbody></table></div><h4 class="table-heading">B. Downstream Sensitivity · Qwen2.5 3B</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Inputs</th><th scope="col">StateCorrectness</th><th scope="col">SupportCorrectness</th><th scope="col">AnswerCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody><tr class="emphasis-row"><th data-label="Inputs" scope="row">TT · Trusted event, trusted query</th><td data-label="StateCorrectness">1.000</td><td data-label="SupportCorrectness">1.000</td><td data-label="AnswerCorrectness">0.292</td><td data-label="JointSuccess">0.292</td></tr><tr><th data-label="Inputs" scope="row">PT · Parsed event, trusted query</th><td data-label="StateCorrectness">0.980</td><td data-label="SupportCorrectness">0.269</td><td data-label="AnswerCorrectness">0.194</td><td data-label="JointSuccess">0.000</td></tr><tr><th data-label="Inputs" scope="row">TP · Trusted event, parsed query</th><td data-label="StateCorrectness">1.000</td><td data-label="SupportCorrectness">0.333</td><td data-label="AnswerCorrectness">0.125</td><td data-label="JointSuccess">0.125</td></tr><tr><th data-label="Inputs" scope="row">PP · Parsed event, parsed query</th><td data-label="StateCorrectness">0.980</td><td data-label="SupportCorrectness">0.278</td><td data-label="AnswerCorrectness">0.125</td><td data-label="JointSuccess">0.000</td></tr></tbody></table></div>
 
-    <section id="findings" aria-labelledby="findings-title">
-      <h2 id="findings-title">Main Findings</h2>
+</article>
+<article class="finding" id="finding-7">
+<div class="finding-number">Finding 07 · Auxiliary validation</div>
+<h3>Answer similarity and support use reveal residual limitations</h3>
+<p class="finding-description">A separate evaluation of recorded responses compares conventional answer similarity with factual value accuracy and required support use. PLACE performs strongly on lexical and factual checks, but visible support does not always transfer into the final answer. These measures complement the governance endpoints rather than replacing semantic AnswerCorrectness or JointSuccess.</p>
+<h4 class="table-heading">A. Conventional Answer Quality</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and condition</th><th scope="col">Token F1</th><th scope="col">ROUGE L F1</th><th scope="col">chrF</th><th scope="col">BLEU 4</th><th scope="col">BERTScore F1</th></tr></thead><tbody><tr><th data-label="Model and condition" scope="row">7B · Native</th><td data-label="Token F1">0.122</td><td data-label="ROUGE L F1">0.101</td><td data-label="chrF">0.219</td><td data-label="BLEU 4">0.040</td><td data-label="BERTScore F1">0.836</td></tr><tr><th data-label="Model and condition" scope="row">7B · CSS</th><td data-label="Token F1">0.126</td><td data-label="ROUGE L F1">0.111</td><td data-label="chrF">0.233</td><td data-label="BLEU 4">0.060</td><td data-label="BERTScore F1">0.844</td></tr><tr><th data-label="Model and condition" scope="row">7B · QASC</th><td data-label="Token F1">0.106</td><td data-label="ROUGE L F1">0.094</td><td data-label="chrF">0.199</td><td data-label="BLEU 4">0.065</td><td data-label="BERTScore F1">0.829</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">7B · PLACE</th><td data-label="Token F1">0.174</td><td data-label="ROUGE L F1">0.150</td><td data-label="chrF">0.273</td><td data-label="BLEU 4">0.068</td><td data-label="BERTScore F1">0.845</td></tr><tr><th data-label="Model and condition" scope="row">3B · Native</th><td data-label="Token F1">0.119</td><td data-label="ROUGE L F1">0.103</td><td data-label="chrF">0.218</td><td data-label="BLEU 4">0.081</td><td data-label="BERTScore F1">0.841</td></tr><tr><th data-label="Model and condition" scope="row">3B · CSS</th><td data-label="Token F1">0.130</td><td data-label="ROUGE L F1">0.121</td><td data-label="chrF">0.235</td><td data-label="BLEU 4">0.154</td><td data-label="BERTScore F1">0.846</td></tr><tr><th data-label="Model and condition" scope="row">3B · QASC</th><td data-label="Token F1">0.104</td><td data-label="ROUGE L F1">0.095</td><td data-label="chrF">0.189</td><td data-label="BLEU 4">0.141</td><td data-label="BERTScore F1">0.834</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">3B · PLACE</th><td data-label="Token F1">0.179</td><td data-label="ROUGE L F1">0.162</td><td data-label="chrF">0.324</td><td data-label="BLEU 4">0.106</td><td data-label="BERTScore F1">0.845</td></tr></tbody></table></div><h4 class="table-heading">B. Factual Value and Support Preservation</h4><div class="table-wrap"><table class="research-table"><thead><tr><th scope="col">Model and condition</th><th scope="col">Value EM</th><th scope="col">Value F1</th><th scope="col">Visible support recall</th><th scope="col">Support to answer recall</th><th scope="col">Full support to answer</th></tr></thead><tbody><tr><th data-label="Model and condition" scope="row">7B · Native</th><td data-label="Value EM">0.233</td><td data-label="Value F1">0.312</td><td data-label="Visible support recall">0.278</td><td data-label="Support to answer recall">0.244</td><td data-label="Full support to answer">0.200</td></tr><tr><th data-label="Model and condition" scope="row">7B · CSS</th><td data-label="Value EM">0.233</td><td data-label="Value F1">0.312</td><td data-label="Visible support recall">0.319</td><td data-label="Support to answer recall">0.253</td><td data-label="Full support to answer">0.200</td></tr><tr><th data-label="Model and condition" scope="row">7B · QASC</th><td data-label="Value EM">0.267</td><td data-label="Value F1">0.280</td><td data-label="Visible support recall">0.200</td><td data-label="Support to answer recall">0.200</td><td data-label="Full support to answer">0.200</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">7B · PLACE</th><td data-label="Value EM">0.400</td><td data-label="Value F1">0.529</td><td data-label="Visible support recall">0.989</td><td data-label="Support to answer recall">0.497</td><td data-label="Full support to answer">0.400</td></tr><tr><th data-label="Model and condition" scope="row">3B · Native</th><td data-label="Value EM">0.100</td><td data-label="Value F1">0.136</td><td data-label="Visible support recall">0.189</td><td data-label="Support to answer recall">0.092</td><td data-label="Full support to answer">0.067</td></tr><tr><th data-label="Model and condition" scope="row">3B · CSS</th><td data-label="Value EM">0.200</td><td data-label="Value F1">0.249</td><td data-label="Visible support recall">0.328</td><td data-label="Support to answer recall">0.200</td><td data-label="Full support to answer">0.167</td></tr><tr><th data-label="Model and condition" scope="row">3B · QASC</th><td data-label="Value EM">0.100</td><td data-label="Value F1">0.127</td><td data-label="Visible support recall">0.200</td><td data-label="Support to answer recall">0.050</td><td data-label="Full support to answer">0.033</td></tr><tr class="emphasis-row"><th data-label="Model and condition" scope="row">3B · PLACE</th><td data-label="Value EM">0.533</td><td data-label="Value F1">0.640</td><td data-label="Visible support recall">0.989</td><td data-label="Support to answer recall">0.614</td><td data-label="Full support to answer">0.533</td></tr></tbody></table></div>
 
-      <article class="finding" id="finding-1">
-        <div class="finding-number">Finding 01 · Write-side governance</div>
-        <h3>CSS maintains the correct persistent state across the trajectory</h3>
-        <p class="finding-description">Longitudinal StateCorrectness rises from <strong>0.488 to 1.000</strong> for 7B and from <strong>0.414 to 1.000</strong> for 3B. Because QASC does not write memory, Native and QASC share the Native-produced state, while CSS and PLACE share the CSS-produced state. This factorization is verified at all 105 post-event and 48 pre-query checkpoints.</p>
-        <div class="result-grid">
-          <div class="result-panel"><h4>Qwen2.5-7B · StateCorrectness</h4>
-            <div class="comparison"><div class="row-label"><span>Native / QASC</span><strong>0.488</strong></div><div class="bar-track"><span class="bar" style="width:48.8%"></span></div></div>
-            <div class="comparison"><div class="row-label"><span>CSS / PLACE</span><strong>1.000</strong></div><div class="bar-track"><span class="bar emphasis" style="width:100%"></span></div></div>
-            <p class="result-note">StateGain: +0.512</p>
-          </div>
-          <div class="result-panel"><h4>Qwen2.5-3B · StateCorrectness</h4>
-            <div class="comparison"><div class="row-label"><span>Native / QASC</span><strong>0.414</strong></div><div class="bar-track"><span class="bar" style="width:41.4%"></span></div></div>
-            <div class="comparison"><div class="row-label"><span>CSS / PLACE</span><strong>1.000</strong></div><div class="bar-track"><span class="bar emphasis" style="width:100%"></span></div></div>
-            <p class="result-note">StateGain: +0.586</p>
-          </div>
-        </div>
-        <p class="caption">StateCorrectness is F1 against the reference semantic state over 105 longitudinal post-event checkpoints; it is not answer accuracy.</p>
-      </article>
-
-      <article class="finding" id="finding-2">
-        <div class="finding-number">Finding 02 · Read-side authorization</div>
-        <h3>QASC eliminates measured causal leakage when the stored state is correct</h3>
-        <p class="finding-description">CSS and PLACE are the cleanest read-side contrast: all <strong>48 causal pairs</strong> are eligible under both, and the authorized states are reference-correct within each paired-world comparison. Replacing Native reading with QASC reduces LeakageRate from <strong>0.125 to 0.000</strong> at 7B and <strong>0.083 to 0.000</strong> at 3B. This is measured leakage on the tested pairs, not a guarantee that leakage is impossible in other settings.</p>
-        <div class="table-scroll"><table aria-label="Causal leakage results"><thead><tr><th scope="col">Model</th><th scope="col">CSS (native read)</th><th scope="col">PLACE (QASC read)</th><th scope="col">LeakageDrop</th><th scope="col">95% pair-bootstrap interval</th></tr></thead><tbody>
-          <tr><td>7B</td><td>0.125 (n=48)</td><td><strong>0.000 (n=48)</strong></td><td>0.125</td><td>[0.042, 0.229]</td></tr>
-          <tr><td>3B</td><td>0.083 (n=48)</td><td><strong>0.000 (n=48)</strong></td><td>0.083</td><td>[0.021, 0.167]</td></tr>
-        </tbody></table></div>
-        <p class="caption">A causal pair is included only when both worlds have the same reference-correct authorized state. Native and QASC have smaller eligible denominators due to write-side state errors; their zero leakage values are not the primary read-side comparison.</p>
-      </article>
-
-      <article class="finding" id="finding-3">
-        <div class="finding-number">Finding 03 · Factorial combination</div>
-        <h3>Combining CSS and QASC yields the strongest strict joint performance</h3>
-        <p class="finding-description">PLACE achieves JointSuccess of <strong>0.667 at 7B</strong> and <strong>0.625 at 3B</strong>, versus 0.417 and 0.354 for CSS alone; QASC alone cannot repair an incorrect Native state. InteractionGain is +0.250 (7B) and +0.271 (3B). These are within-trajectory sensitivity results, not population-level evidence of statistical synergy.</p>
-        <div class="table-scroll"><table aria-label="Main factorial answer and joint results"><thead><tr><th scope="col">Condition</th><th scope="col">7B AnswerCorrectness</th><th scope="col">7B JointSuccess</th><th scope="col">3B AnswerCorrectness</th><th scope="col">3B JointSuccess</th></tr></thead><tbody>
-          <tr><td>Native</td><td>0.682</td><td>0.000</td><td>0.451</td><td>0.000</td></tr>
-          <tr><td>CSS</td><td><strong>0.793</strong></td><td>0.417</td><td>0.618</td><td>0.354</td></tr>
-          <tr><td>QASC</td><td>0.653</td><td>0.000</td><td>0.410</td><td>0.000</td></tr>
-          <tr class="emphasis-row"><td>PLACE</td><td>0.713</td><td><strong>0.667</strong></td><td><strong>0.654</strong></td><td><strong>0.625</strong></td></tr>
-        </tbody></table></div>
-        <p class="caption">JointSuccess requires correct query state, authorized and sufficient support, no governance violation, and a correct answer. PLACE does not dominate AnswerCorrectness: at 7B, CSS scores 0.793 versus PLACE's 0.713.</p>
-      </article>
-
-      <article class="finding" id="finding-4">
-        <div class="finding-number">Finding 04 · Targeted diagnostics</div>
-        <h3>Authorization preserves needed support and carries into Closed Loop</h3>
-        <p class="finding-description">Reducing ineligible exposure does not require suppressing all memory. PLACE retains <strong>1.000 NeededSupport</strong> on applicable Utility probes (15/15 per scale), while reporting <strong>0.000 ExposureRate</strong>. In Closed Loop, prior assistant responses remain in non-authoritative dialogue context; PLACE still maintains state correctness and exposure control, although 3B JointSuccess is lower than in Primary.</p>
-        <div class="result-grid">
-          <div class="result-panel"><h4>Read-side Utility · PLACE</h4><div class="table-scroll"><table aria-label="PLACE utility diagnostics"><thead><tr><th>Model</th><th>NeededSupport</th><th>ExposureRate</th><th>ConflictHarm</th></tr></thead><tbody><tr><td>7B</td><td><strong>1.000</strong></td><td><strong>0.000</strong></td><td>0.042</td></tr><tr><td>3B</td><td><strong>1.000</strong></td><td><strong>0.000</strong></td><td>0.000</td></tr></tbody></table></div><p class="result-note">Nine of 24 nominal needed-support probes per scale have no applicable authorized fact and are excluded from the NeededSupport denominator.</p></div>
-          <div class="result-panel"><h4>Closed Loop · PLACE</h4><div class="table-scroll"><table aria-label="PLACE closed-loop diagnostics"><thead><tr><th>Model</th><th>StateCorrectness</th><th>ExposureRate</th><th>JointSuccess</th></tr></thead><tbody><tr><td>7B</td><td>1.000</td><td>0.000</td><td><strong>0.667</strong></td></tr><tr><td>3B</td><td>1.000</td><td>0.000</td><td><strong>0.458</strong></td></tr></tbody></table></div><p class="result-note">Closed Loop retains earlier assistant replies in dialogue; its JointSuccess need not equal the Primary result.</p></div>
-        </div>
-        <p class="caption">ConflictHarm is an indicator of conflicting injected evidence appearing in an incorrect answer; it is not an identified causal contribution of that evidence.</p>
-      </article>
-
-      <article class="finding" id="finding-5">
-        <div class="finding-number">Finding 05 · Governance-family robustness</div>
-        <h3>The gains extend across all six governance families</h3>
-        <p class="finding-description">PLACE achieves <strong>State@Query F1 = 1.000</strong> and <strong>LeakageRate = 0.000</strong> across every family at both scales; each PLACE family has eight eligible causal pairs. JointSuccess is positive in all six families, but not uniform: <strong>dependency</strong> is the weakest (0.375 at 7B; 0.250 at 3B). This pinpoints remaining downstream difficulty even when state formation and authorization are correct.</p>
-        <div class="table-scroll"><table aria-label="Per-family joint success"><thead><tr><th rowspan="2" scope="col">Family</th><th colspan="2" scope="colgroup">7B JointSuccess</th><th colspan="2" scope="colgroup">3B JointSuccess</th></tr><tr><th scope="col">CSS</th><th scope="col">PLACE</th><th scope="col">CSS</th><th scope="col">PLACE</th></tr></thead><tbody>
-          <tr><td>Supersession</td><td>0.250</td><td><strong>0.875</strong></td><td>0.250</td><td><strong>0.875</strong></td></tr>
-          <tr><td>Scope</td><td>0.375</td><td><strong>0.625</strong></td><td>0.375</td><td><strong>0.625</strong></td></tr>
-          <tr><td>Permission</td><td>0.625</td><td><strong>0.750</strong></td><td>0.250</td><td><strong>0.750</strong></td></tr>
-          <tr><td>Authority</td><td>0.625</td><td><strong>0.625</strong></td><td>0.750</td><td><strong>0.750</strong></td></tr>
-          <tr><td>Dependency</td><td>0.250</td><td><strong>0.375</strong></td><td>0.125</td><td><strong>0.250</strong></td></tr>
-          <tr><td>Epistemic</td><td>0.375</td><td><strong>0.750</strong></td><td>0.375</td><td><strong>0.500</strong></td></tr>
-        </tbody></table></div>
-        <p class="caption">Each family includes eight Primary queries. State@Query F1 measures pre-query state quality, distinct from the main paper's 105-checkpoint longitudinal StateCorrectness. Full Native/CSS/QASC/PLACE family values appear in the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplement</a>.</p>
-      </article>
-
-      <article class="finding" id="finding-6">
-        <div class="finding-number">Finding 06 · Automatic parsing</div>
-        <h3>Semantic interpretation remains a bottleneck outside the trusted-semantics setting</h3>
-        <p class="finding-description">Primary isolates governance with trusted event and query interpretations. In a separate 24-case diagnostic, automatic parsing substantially reduces support and joint correctness. Event-field F1 is 0.776 / 0.456 and query-field F1 is 0.468 / 0.259 at 7B / 3B; transition agreement is 0.583 / 0.000. These parser limits motivate future end-to-end evaluation and should not be conflated with the controlled Primary results.</p>
-        <div class="table-scroll"><table aria-label="Parser downstream sensitivity"><thead><tr><th rowspan="2" scope="col">Input semantics</th><th colspan="2" scope="colgroup">7B</th><th colspan="2" scope="colgroup">3B</th></tr><tr><th scope="col">SupportCorrectness</th><th scope="col">JointSuccess</th><th scope="col">SupportCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody>
-          <tr><td>TT · Trusted event, trusted query</td><td>1.000</td><td>0.333</td><td>1.000</td><td>0.292</td></tr>
-          <tr><td>PT · Parsed event, trusted query</td><td>0.329</td><td>0.000</td><td>0.269</td><td>0.000</td></tr>
-          <tr><td>TP · Trusted event, parsed query</td><td>0.502</td><td>0.250</td><td>0.333</td><td>0.125</td></tr>
-          <tr><td>PP · Parsed event, parsed query</td><td>0.250</td><td>0.000</td><td>0.278</td><td>0.000</td></tr>
-        </tbody></table></div>
-        <p class="caption">TT is a diagnostic-subset control, not the full 48-query PLACE baseline. Structural parser metrics are distinct from answer-dependent strict-general scoring.</p>
-      </article>
-
-      <article class="finding" id="finding-7">
-        <div class="finding-number">Finding 07 · Supplementary cross-checks</div>
-        <h3>Visible support helps, but does not guarantee correct final answers</h3>
-        <p class="finding-description">A separate read-only validation of the frozen Primary responses checks conventional similarity and factual/support use. PLACE yields the highest Token F1 at both scales (0.174 / 0.179) and nearly complete required-support visibility (0.989 / 0.989). Yet Support-to-Answer Recall is only 0.497 / 0.614, indicating that available information is not always fully used in the answer. Conventional metrics also need not rank conditions the same way as strict governance JointSuccess.</p>
-        <div class="result-grid">
-          <div class="result-panel"><h4>Conventional answer quality · PLACE</h4><div class="table-scroll"><table aria-label="Conventional answer quality for PLACE"><thead><tr><th>Model</th><th>Token F1</th><th>ROUGE-L F1</th><th>chrF</th><th>BERTScore F1</th></tr></thead><tbody><tr><td>7B</td><td>0.174</td><td>0.150</td><td>0.273</td><td>0.845</td></tr><tr><td>3B</td><td>0.179</td><td>0.162</td><td>0.324</td><td>0.845</td></tr></tbody></table></div><p class="result-note">At 3B, CSS slightly exceeds PLACE in BERTScore F1 (0.846 vs. 0.845) and BLEU-4 (0.154 vs. 0.106).</p></div>
-          <div class="result-panel"><h4>Factual and support checks · PLACE</h4><div class="table-scroll"><table aria-label="Factual support for PLACE"><thead><tr><th>Model</th><th>Value F1</th><th>Support visible recall</th><th>Support-to-answer recall</th></tr></thead><tbody><tr><td>7B</td><td>0.529</td><td>0.989</td><td>0.497</td></tr><tr><td>3B</td><td>0.640</td><td>0.989</td><td>0.614</td></tr></tbody></table></div><p class="result-note">Support and factual-value checks use the applicable auxiliary probes, not the V32 governance AnswerCorrectness definition.</p></div>
-        </div>
-        <p class="caption">These are archived auxiliary, post-hoc metrics on frozen outputs, not model reruns and not replacements for strict-general AnswerCorrectness. The complete four-condition tables are in the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplementary material</a>.</p>
-      </article>
-    </section>
-
-    <section id="limitations" aria-labelledby="limitations-title">
-      <h2 id="limitations-title">Scope and Interpretation</h2>
-      <p>These results establish the behavior of PLACE in a <strong>controlled, trusted-semantics evaluation</strong>. They do not yet demonstrate a fully automatic end-to-end agent, independence across multiple longitudinal trajectories, or population-level guarantees. StateCorrectness and State@Query F1 are different checkpoint metrics. LeakageRate is measured only on eligible paired worlds; a zero reported value does not imply zero risk in every possible history.</p>
-      <p>The V32 strict-general paper-facing evaluator directly covers <strong>42 of 48</strong> Primary answer obligations; six legacy queries use frozen compatibility scores to preserve the prespecified denominator. The archived evaluator therefore marks this campaign as <strong>not yet fully confirmatory-ready</strong> under its full-coverage criterion. Conventional answer-quality and support-use cross-checks were computed separately on the same frozen responses.</p>
-      <p class="note">For precise metric definitions, eligibility criteria, evaluator limitations, and all supplementary tables, consult the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplementary PDF</a>. The StateGain and InteractionGain intervals in the main paper are within-trajectory sensitivity intervals; the causal-pair leakage intervals use pair-level bootstrap resampling.</p>
-    </section>
-
-    <section id="citation" aria-labelledby="citation-title">
-      <h2 id="citation-title">Citation</h2>
-      <p>If you find this research useful, please cite the manuscript. Publication details can be updated when a public paper record becomes available.</p>
-      <div class="cite-box"><pre><code>@misc{hu2026memoryknowplace,
+</article>
+</section>
+<section aria-labelledby="limitations-title" id="limitations"><h2 id="limitations-title">Scope and Limitations</h2>
+<p>The governance results use trusted semantic interpretations to separate state formation from query authorization. They do not establish the performance of an entirely automatic memory agent. The parser diagnostic evaluates that separate challenge.</p>
+<p>Longitudinal results come from a controlled trajectory, so their intervals describe sensitivity within that evaluation rather than population level confidence. Causal leakage is calculated only when compared worlds have reference correct authorized support. Zero measured leakage is not a guarantee of zero risk under other histories.</p>
+<p>Conventional similarity and factual support results are additional checks on the recorded responses. The main semantic answer results also retain compatibility adjudication for legacy reference annotations. These outcomes should be interpreted under the methodology described in the manuscript.</p></section>
+<section aria-labelledby="citation-title" id="citation">
+<h2 id="citation-title">Citation</h2>
+<p>If you use or discuss this work, please cite the manuscript. The project URL is included below and can be updated at any time.</p>
+<div class="cite-box"><pre><code>@misc{hu2026memoryknowplace,
   title  = {Memory, Know Your PLACE: Governing Lifecycle State and
             Query-Time Eligibility in Persistent-Memory Agents},
   author = {Hu, Chen-Fang and Shuai, Hong-Han and Chien, Woan-Shiuan},
   year   = {2026},
-  note   = {Manuscript submitted for review}
+  note   = {Manuscript submitted for review},
+  url    = {https://hcf-tracy.github.io/memory-know-your-place/}
 }</code></pre></div>
-    </section>
-  </main>
-
-  <footer>Memory, Know Your PLACE · National Yang Ming Chiao Tung University · <a href="#top">Back to top</a></footer>
+<p class="project-url">Project page: <a href="https://hcf-tracy.github.io/memory-know-your-place/" rel="noopener noreferrer" target="_blank">https://hcf-tracy.github.io/memory-know-your-place/</a></p></section>
+</main>
+<footer>Memory, Know Your PLACE · National Yang Ming Chiao Tung University · <a href="#top">Back to top</a></footer>
 </div>
 </body>
 </html>
