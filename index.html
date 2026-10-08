@@ -15,7 +15,7 @@
       --line: #e4e7eb;
       --soft: #f8f9fa;
       --blue: #2469b3;
-      --page-width: 1050px;
+      --page-width: 1120px;
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 28px; }
@@ -62,11 +62,12 @@
     strong { font-weight: 710; }
     .muted { color: var(--muted); }
     .small { font-size: .88rem; }
-    .tldr { border-left: 3px solid #d5dbe0; padding: 1px 0 1px 23px; max-width: 910px; }
+    .tldr { width: 100%; margin: 0; border: 0; padding: 0; }
     .tldr p { font-size: 1.1rem; margin-bottom: 0; }
-    .abstract { color: #343941; max-width: 950px; }
-    .contributions { padding-left: 22px; margin: 0; }
-    .contributions li { padding-left: 3px; margin-bottom: 12px; }
+    .abstract { color: #343941; }
+    .contributions { padding: 0; margin: 0; list-style: none; }
+    .contributions li { position: relative; padding: 0; margin: 0 0 12px; }
+    .contributions li::before { content: "•"; position: absolute; left: -15px; top: 0; color: var(--muted); }
     .contributions li strong { color: #22262d; }
     .framework-figure { margin: 24px 0 0; }
     .figure-frame { border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: #fff; }
@@ -81,7 +82,7 @@
     .finding { margin: 42px 0 55px; padding-bottom: 37px; border-bottom: 1px solid var(--line); }
     .finding:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
     .finding-number { font-size: .79rem; text-transform: uppercase; color: var(--subtle); font-weight: 650; letter-spacing: .07em; margin-bottom: 7px; }
-    .finding-description { max-width: 925px; color: #404650; }
+    .finding-description { color: #404650; }
     .result-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; margin: 24px 0 14px; }
     .result-panel { border: 1px solid var(--line); border-radius: 9px; padding: 19px 19px 15px; min-width: 0; }
     .result-panel h4 { margin-bottom: 17px; }
@@ -117,16 +118,13 @@
       .authors { font-size: 1.04rem; }
       .result-grid { grid-template-columns: 1fr; gap: 15px; }
       .setup-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
-      .tldr { padding-left: 16px; }
       section { margin-top: 52px; }
       .finding { margin-top: 34px; padding-bottom: 28px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
   
 /* Layout and typography adjustments for complete research tables */
-:root { --page-width: 1120px; }
 html, body { overflow-x: clip; }
-.section-lede { max-width: 850px; }
 .table-heading { margin: 28px 0 13px; font-weight: 760; font-size: 1.08rem; }
 .table-wrap { margin: 19px 0 10px; width: 100%; overflow: visible; }
 .research-table { width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; font-size: .87rem; }
@@ -136,9 +134,8 @@ html, body { overflow-x: clip; }
 .research-table .emphasis-row { background: #f8f9fa; }
 .research-table tbody th { font-weight: 580; }
 .research-table tbody tr.emphasis-row th { font-weight: 740; }
-.finding-description { max-width: 980px; }
 .table-heading+.table-wrap { margin-top: 6px; }
-.caption { max-width: 1010px; line-height: 1.5; }
+.caption { line-height: 1.5; }
 #finding-5 .research-table { font-size: .82rem; }
 #finding-5 .research-table th:first-child { width: 28%; }
 #finding-7 .research-table { font-size: .81rem; }
@@ -168,16 +165,6 @@ html, body { overflow-x: clip; }
   #citation pre { font-size: .75rem; }
 }
 
-
-/* Editorial alignment */
-main p, main li {
-  text-align: justify;
-  text-justify: inter-word;
-  hyphens: none;
-}
-main p.caption, main p.family-guide, main .result-note {
-  text-align: left;
-}
 
 /* Compact model comparisons within each governance family */
 .family-guide { color: var(--muted); font-size: .91rem; margin: 17px 0 22px; }
@@ -226,32 +213,41 @@ main p.caption, main p.family-guide, main .result-note {
 
 
 /* Unified content alignment
-   Each section uses the full content width shared by the framework and tables.
-   Text is justified within that width; headings and table cells keep their own alignment. */
+   The text and all research tables share the same page width and edges.
+   Paragraphs and list items use full justification; the final line stays natural.
+   Numeric table columns and the centered title retain their intended alignment. */
+main > section,
+main > section > article,
 #overview .tldr,
 #abstract .abstract,
+#contributions .contributions,
+#framework .framework-figure,
+#framework .figure-frame,
 #findings .finding-description,
 #findings .family-guide,
 #findings .caption,
-#framework p,
-#citation > p {
+#findings .table-wrap,
+#citation .cite-box {
   width: 100%;
   max-width: none;
   margin-left: 0;
   margin-right: 0;
 }
-#overview .tldr {
-  border-left: 0;
-  padding: 0;
+main p,
+main li,
+main figcaption {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
 }
-#overview .tldr p { text-align: justify; text-align-last: left; }
-#abstract .abstract,
-#framework p,
-#findings .finding-description,
-#citation > p { text-align: justify; text-align-last: left; }
-
-/* Lists retain readable markers while all description lines share one column. */
-#contributions .contributions { max-width: none; width: 100%; }
+/* Keep aligned left edges for labels, headings and citation code. */
+main h2, main h3, main h4, main h5,
+main .finding-number, main .family-model,
+main pre, main th:first-child {
+  text-align: left;
+}
+#citation pre { width: 100%; }
 </style>
 </head>
 <body>
