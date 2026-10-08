@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -225,6 +224,34 @@ main p.caption, main p.family-guide, main .result-note {
   .family-panel { padding: 12px 8px; }
 }
 
+
+/* Unified content alignment
+   Each section uses the full content width shared by the framework and tables.
+   Text is justified within that width; headings and table cells keep their own alignment. */
+#overview .tldr,
+#abstract .abstract,
+#findings .finding-description,
+#findings .family-guide,
+#findings .caption,
+#framework p,
+#citation > p {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+#overview .tldr {
+  border-left: 0;
+  padding: 0;
+}
+#overview .tldr p { text-align: justify; text-align-last: left; }
+#abstract .abstract,
+#framework p,
+#findings .finding-description,
+#citation > p { text-align: justify; text-align-last: left; }
+
+/* Lists retain readable markers while all description lines share one column. */
+#contributions .contributions { max-width: none; width: 100%; }
 </style>
 </head>
 <body>
@@ -311,7 +338,7 @@ main p.caption, main p.family-guide, main .result-note {
 
 <section aria-labelledby="citation-title" id="citation">
 <h2 id="citation-title">Citation</h2>
-<p>If you use or discuss this work, please cite the manuscript. The project URL is included below and can be updated at any time.</p>
+<p>If you find this research useful, please consider citing our work.</p>
 <div class="cite-box"><pre><code>@misc{2026memoryknowplace,
   title  = {Memory, Know Your PLACE: Governing Lifecycle State and
             Query-Time Eligibility in Persistent-Memory Agents},
@@ -320,6 +347,8 @@ main p.caption, main p.family-guide, main .result-note {
   note   = {Manuscript submitted for review},
   url    = {https://hcf-tracy.github.io/memory-know-your-place/}
 }</code></pre></div>
+</section>
+</main>
 <footer>Memory, Know Your PLACE · National Yang Ming Chiao Tung University · <a href="#top">Back to top</a></footer>
 </div>
 </body>
