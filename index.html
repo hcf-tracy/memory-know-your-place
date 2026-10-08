@@ -248,6 +248,17 @@ main pre, main th:first-child {
   text-align: left;
 }
 #citation pre { width: 100%; }
+
+/* Linked author names retain the header style. */
+.authors a {
+  color: inherit;
+  text-decoration: none;
+}
+.authors a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
 </style>
 </head>
 <body>
@@ -257,20 +268,9 @@ main pre, main th:first-child {
 <header class="header">
 <h1>Memory, Know Your PLACE:<span class="subtitle">Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents</span></h1>
 <p class="authors">
-  <a href="https://www.linkedin.com/in/chen-fang-hu-tracy/"
-     target="_blank" rel="noopener noreferrer">
-    <strong>Chen-Fang Hu</strong>
-  </a><sup>1</sup>,
-
-  <a href="https://basiclab.lab.nycu.edu.tw/"
-     target="_blank" rel="noopener noreferrer">
-    <strong>Hong-Han Shuai</strong>
-  </a><sup>2,*</sup>,
-
-  <a href="https://woanshiuanchien.github.io/"
-     target="_blank" rel="noopener noreferrer">
-    <strong>Woan-Shiuan Chien</strong>
-  </a><sup>2,*</sup>
+  <a href="https://www.linkedin.com/in/chen-fang-hu-tracy/" target="_blank" rel="noopener noreferrer"><strong>Chen-Fang Hu</strong></a><sup>1</sup>,
+  <a href="https://basiclab.lab.nycu.edu.tw/" target="_blank" rel="noopener noreferrer"><strong>Hong-Han Shuai</strong></a><sup>2,*</sup>,
+  <a href="https://woanshiuanchien.github.io/" target="_blank" rel="noopener noreferrer"><strong>Woan-Shiuan Chien</strong></a><sup>2,*</sup>
 </p>
 <p class="affiliations"><sup>1</sup>Arête Honors Program  ·  <sup>2</sup>Institute of Electrical and Computer Engineering<br/>National Yang Ming Chiao Tung University, Taiwan</p>
 <p class="contact-note"><sup>*</sup>Corresponding authors</p>
