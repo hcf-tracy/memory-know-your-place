@@ -1,542 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Memory, Know Your PLACE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Memory, Know Your PLACE: Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents. Research project, methodology, results, and supplementary analyses.">
+  <meta name="color-scheme" content="light">
+  <title>Memory, Know Your PLACE | Research Project</title>
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --ink: #20232a;
+      --muted: #565e69;
+      --subtle: #6c737e;
+      --line: #e4e7eb;
+      --soft: #f8f9fa;
+      --blue: #2469b3;
+      --page-width: 1050px;
     }
-
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 28px; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
+      color: var(--ink);
       background: #fff;
-      line-height: 1.6;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
     }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { text-decoration-color: var(--ink); }
+    a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; border-radius: 3px; }
+    .skip-link { position: absolute; left: -9999px; top: 8px; padding: 10px; background: #fff; z-index: 10; }
+    .skip-link:focus { left: 14px; }
+    .container { max-width: var(--page-width); margin: 0 auto; padding: 38px 24px 76px; }
 
-    .container {
-      max-width: 1050px;
-      margin: 0 auto;
-      padding: 60px 24px 80px;
+    /* Navigation and heading typography */
+    .topnav { display: flex; gap: 22px; justify-content: flex-end; flex-wrap: wrap; font-size: .85rem; color: var(--muted); }
+    .topnav a { text-decoration: none; }
+    .topnav a:hover { text-decoration: underline; }
+    .header { margin: 62px auto 48px; text-align: center; }
+    h1, h2, h3, h4 { font-weight: 780; letter-spacing: -.025em; color: #1c2026; }
+    h1 { font-size: clamp(2.15rem, 4vw, 3.05rem); line-height: 1.22; max-width: 990px; margin: 0 auto 23px; }
+    h1 .subtitle { display: block; font-size: .79em; line-height: 1.33; margin-top: 10px; }
+    .authors { font-size: 1.18rem; line-height: 1.65; margin: 0; }
+    .authors strong { font-weight: 650; }
+    .affiliations { color: var(--muted); margin: 7px auto 3px; font-size: .96rem; }
+    .contact-note { color: var(--subtle); margin: 0; font-size: .88rem; }
+    .buttons { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin: 27px auto 0; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 9px 19px; font-size: .92rem; border: 1px solid #292e35; border-radius: 7px; text-decoration: none; color: #fff; background: #252a30; transition: transform .12s, background .12s; }
+    .button:hover { background: #414852; transform: translateY(-1px); text-decoration: none; }
+    .button.secondary { background: #fff; color: #282d34; border-color: #cfd4d9; }
+    .button.secondary:hover { background: var(--soft); }
+
+    section { margin-top: 67px; }
+    h2 { font-size: clamp(1.55rem, 2.5vw, 1.95rem); margin: 0 0 21px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+    h3 { font-size: 1.27rem; line-height: 1.4; margin: 0 0 12px; }
+    h4 { font-size: 1rem; margin: 0 0 13px; }
+    p { margin: 0 0 17px; font-size: 1rem; }
+    .lede { font-size: 1.09rem; line-height: 1.77; }
+    .keyword { color: var(--blue); font-weight: 740; }
+    strong { font-weight: 710; }
+    .muted { color: var(--muted); }
+    .small { font-size: .88rem; }
+    .tldr { border-left: 3px solid #d5dbe0; padding: 1px 0 1px 23px; max-width: 910px; }
+    .tldr p { font-size: 1.1rem; margin-bottom: 0; }
+    .abstract { color: #343941; max-width: 950px; }
+    .contributions { padding-left: 22px; margin: 0; }
+    .contributions li { padding-left: 3px; margin-bottom: 12px; }
+    .contributions li strong { color: #22262d; }
+    .framework-figure { margin: 24px 0 0; }
+    .figure-frame { border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: #fff; }
+    .framework-figure img { width: 100%; height: auto; display: block; }
+    figcaption { color: var(--muted); font-size: .88rem; line-height: 1.55; margin-top: 10px; }
+    .inline-source { font-size: .88rem; color: var(--muted); margin-top: 9px; }
+    .note { border-top: 1px solid var(--line); padding-top: 15px; font-size: .91rem; color: var(--muted); }
+    .setup-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 17px; margin: 23px 0; }
+    .setup-item { border-top: 2px solid #dadee3; padding-top: 13px; }
+    .setup-value { display: block; font-size: 1.55rem; font-weight: 780; line-height: 1.3; letter-spacing: -.015em; }
+    .setup-label { display: block; font-size: .87rem; color: var(--muted); }
+    .finding { margin: 42px 0 55px; padding-bottom: 37px; border-bottom: 1px solid var(--line); }
+    .finding:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+    .finding-number { font-size: .79rem; text-transform: uppercase; color: var(--subtle); font-weight: 650; letter-spacing: .07em; margin-bottom: 7px; }
+    .finding-description { max-width: 925px; color: #404650; }
+    .result-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; margin: 24px 0 14px; }
+    .result-panel { border: 1px solid var(--line); border-radius: 9px; padding: 19px 19px 15px; min-width: 0; }
+    .result-panel h4 { margin-bottom: 17px; }
+    .comparison { margin: 14px 0 19px; }
+    .comparison .row-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .89rem; margin-bottom: 5px; }
+    .comparison .row-label strong { font-variant-numeric: tabular-nums; }
+    .bar-track { width: 100%; height: 10px; background: #eceef0; border-radius: 3px; overflow: hidden; }
+    .bar { display: block; height: 100%; background: #9da5ae; }
+    .bar.emphasis { background: #262c33; }
+    .result-note { font-size: .83rem; color: var(--muted); margin: 8px 0 0; }
+    .table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 19px 0 14px; }
+    table { width: 100%; border-collapse: collapse; border-spacing: 0; font-size: .9rem; min-width: 430px; font-variant-numeric: tabular-nums; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+    th:first-child, td:first-child { text-align: left; }
+    thead th { border-top: 2px solid #40454d; border-bottom: 1px solid #aab1b9; color: #3c424b; font-size: .82rem; font-weight: 740; vertical-align: bottom; }
+    tbody tr:last-child td { border-bottom: 2px solid #ccd1d6; }
+    tr.emphasis-row { background: var(--soft); font-weight: 700; }
+    td.text { text-align: left; }
+    .caption { color: var(--muted); font-size: .84rem; margin: 6px 0 0; }
+    .subhead { font-size: 1.05rem; font-weight: 740; margin: 19px 0 4px; }
+    details { border-top: 1px solid var(--line); margin-top: 19px; }
+    details summary { padding: 14px 0; color: #282e35; font-weight: 680; cursor: pointer; }
+    details[open] summary { padding-bottom: 4px; }
+    .footnote { font-size: .84rem; color: var(--muted); }
+    .cite-box { position: relative; }
+    pre { background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 21px; overflow-x: auto; white-space: pre; font-size: .88rem; line-height: 1.6; }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; }
+    footer { margin-top: 76px; border-top: 1px solid var(--line); padding-top: 20px; text-align: center; font-size: .86rem; color: var(--subtle); }
+    @media (max-width: 720px) {
+      .container { padding: 24px 18px 55px; }
+      .topnav { justify-content: center; gap: 12px 18px; }
+      .header { margin-top: 42px; }
+      .authors { font-size: 1.04rem; }
+      .result-grid { grid-template-columns: 1fr; gap: 15px; }
+      .setup-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px; }
+      .tldr { padding-left: 16px; }
+      section { margin-top: 52px; }
+      .finding { margin-top: 34px; padding-bottom: 28px; }
     }
-
-    /* =========================
-       HEADER
-       ========================= */
-
-    .header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    h1 {
-      font-size: 2.6rem;
-      line-height: 1.2;
-      margin: 0 auto 24px;
-      max-width: 1000px;
-      font-weight: 750;
-      letter-spacing: -0.02em;
-    }
-
-    .authors {
-      font-size: 1.25rem;
-      margin-bottom: 4px;
-    }
-
-    .affiliation {
-      font-size: 1.05rem;
-      color: #555;
-      margin-bottom: 5px;
-    }
-
-    .contact-note {
-      font-size: 0.9rem;
-      color: #777;
-      margin-bottom: 28px;
-    }
-
-    /* =========================
-       BUTTONS
-       ========================= */
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 25px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 7px;
-      text-decoration: none;
-      color: #fff;
-      background: #222;
-      font-size: 0.95rem;
-      transition: opacity 0.2s ease;
-    }
-
-    .button:hover {
-      opacity: 0.8;
-    }
-
-    /* =========================
-       SECTIONS
-       ========================= */
-
-    section {
-      margin-top: 65px;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      margin-bottom: 22px;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 10px;
-    }
-
-    h3 {
-      margin-bottom: 8px;
-    }
-
-    p {
-      font-size: 1.02rem;
-    }
-
-    /* =========================
-       TLDR
-       ========================= */
-
-    .tldr {
-      background: #f6f6f6;
-      border-radius: 10px;
-      padding: 24px 28px;
-      font-size: 1.08rem;
-    }
-
-    .tldr strong {
-      font-weight: 700;
-    }
-
-    /* =========================
-       PLACEHOLDER IMAGES
-       ========================= */
-
-    .image-placeholder {
-      width: 100%;
-      min-height: 380px;
-      background: #f4f4f4;
-      border: 2px dashed #bbb;
-      border-radius: 10px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-      padding: 30px;
-      color: #888;
-      font-size: 1rem;
-    }
-
-    .framework-placeholder {
-      min-height: 480px;
-    }
-
-    /* =========================
-       FINDINGS
-       ========================= */
-
-    .finding {
-      margin-bottom: 65px;
-    }
-
-    .finding-number {
-      color: #777;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .finding h3 {
-      font-size: 1.4rem;
-      margin-top: 5px;
-    }
-
-    .finding-description {
-      margin-bottom: 20px;
-      color: #444;
-    }
-
-    /* =========================
-       BIBTEX
-       ========================= */
-
-    pre {
-      background: #f5f5f5;
-      padding: 22px;
-      border-radius: 8px;
-      overflow-x: auto;
-      line-height: 1.5;
-      font-size: 0.9rem;
-    }
-
-    /* =========================
-       FOOTER
-       ========================= */
-
-    footer {
-      margin-top: 80px;
-      padding-top: 25px;
-      border-top: 1px solid #ddd;
-      text-align: center;
-      color: #888;
-      font-size: 0.9rem;
-    }
-
-    /* =========================
-       MOBILE
-       ========================= */
-
-    @media (max-width: 700px) {
-      .container {
-        padding: 40px 18px 60px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      .authors {
-        font-size: 1.1rem;
-      }
-
-      .image-placeholder {
-        min-height: 260px;
-      }
-
-      .framework-placeholder {
-        min-height: 320px;
-      }
-    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
   </style>
 </head>
-
-
 <body>
-
-<div class="container">
-
-  <!-- =====================================================
-       TITLE
-       ===================================================== -->
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="container" id="top">
+  <nav class="topnav" aria-label="Page navigation">
+    <a href="#overview">Overview</a>
+    <a href="#contributions">Contributions</a>
+    <a href="#framework">Framework</a>
+    <a href="#findings">Findings</a>
+    <a href="#citation">Citation</a>
+  </nav>
 
   <header class="header">
-
-    <h1>
-      Memory, Know Your PLACE:
-      Governing Lifecycle State and Query-Time Eligibility
-      in Persistent-Memory Agents
-    </h1>
-
-    <div class="authors">
-      Chen-Fang Hu,
-      Hong-Han Shuai<sup>*</sup>,
-      Woan-Shiuan Chien<sup>*</sup>
+    <h1>Memory, Know Your PLACE:<span class="subtitle">Governing Lifecycle State and Query-Time Eligibility in Persistent-Memory Agents</span></h1>
+    <p class="authors"><strong>Chen-Fang Hu</strong><sup>1</sup>, <strong>Hong-Han Shuai</strong><sup>2,*</sup>, <strong>Woan-Shiuan Chien</strong><sup>2,*</sup></p>
+    <p class="affiliations"><sup>1</sup>Arête Honors Program &nbsp;·&nbsp; <sup>2</sup>Institute of Electrical and Computer Engineering<br>National Yang Ming Chiao Tung University, Taiwan</p>
+    <p class="contact-note"><sup>*</sup>Corresponding authors</p>
+    <div class="buttons" aria-label="Project resources">
+      <!-- Replace this comment with an actual paper link once publicly available:
+           <a class="button" href="https://YOUR_VERIFIED_PAPER_URL" target="_blank" rel="noopener noreferrer">Paper</a>
+      -->
+      <!-- Replace this comment with the verified public source repository URL:
+           <a class="button" href="https://github.com/YOUR_ACCOUNT/YOUR_REPOSITORY" target="_blank" rel="noopener noreferrer">Code</a>
+      -->
+      <a class="button" href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">Supplementary PDF</a>
+      <a class="button secondary" href="#citation">Citation</a>
     </div>
-
-    <div class="affiliation">
-      National Yang Ming Chiao Tung University
-    </div>
-
-    <div class="contact-note">
-      <sup>*</sup> Contact author
-    </div>
-
-    <div class="buttons">
-
-      <!-- Replace # with the actual paper URL -->
-      <a class="button" href="#" target="_blank">
-        Paper
-      </a>
-
-      <!-- Replace # with the actual GitHub repository URL -->
-      <a class="button" href="#" target="_blank">
-        GitHub
-      </a>
-
-    </div>
-
   </header>
 
-
-  <!-- =====================================================
-       TL;DR
-       ===================================================== -->
-
-  <section>
-
-    <h2>TL;DR</h2>
-
-    <div class="tldr">
-
-      <strong>PLACEHOLDER TL;DR.</strong>
-
-      Write approximately 2–4 sentences here summarizing the central
-      problem, what PLACE does, and the main empirical takeaway.
-
-      For example:
-
-      [Problem with persistent-memory agents.]
-      [Core idea behind PLACE.]
-      [What CSS controls.]
-      [What QASC controls.]
-      [Most important experimental result.]
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       FRAMEWORK
-       ===================================================== -->
-
-  <section>
-
-    <h2>Framework</h2>
-
-    <p>
-      PLACEHOLDER FRAMEWORK DESCRIPTION.
-      Briefly introduce PLACE and explain what the reader should notice
-      in the framework figure.
-    </p>
-
-    <div class="image-placeholder framework-placeholder">
-      FRAMEWORK IMAGE PLACEHOLDER
-      <br><br>
-      Replace this box with your PLACE framework figure.
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       MAIN FINDINGS
-       ===================================================== -->
-
-  <section>
-
-    <h2>Main Findings</h2>
-
-
-    <!-- ================= FINDING 1 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 1
+  <main id="main">
+    <section id="overview" aria-labelledby="overview-title">
+      <h2 id="overview-title">TL;DR</h2>
+      <div class="tldr">
+        <p>Persistent memory can store the wrong current facts—or expose correctly stored facts that should not affect a particular query. <span class="keyword">PLACE</span> separates <span class="keyword">state correctness</span> from <span class="keyword">influence correctness</span> with a write-side certification mechanism and a read-side authorization mechanism. In a controlled Mem0 evaluation, PLACE achieves <strong>1.000 StateCorrectness</strong>, <strong>zero measured causal leakage</strong> in the state-correct paired comparison, and <strong>0.667 / 0.625 JointSuccess</strong> on Qwen2.5-7B / 3B.</p>
       </div>
+    </section>
 
-      <h3>
-        PLACEHOLDER FINDING 1 TITLE
-      </h3>
+    <section id="abstract" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">Abstract</h2>
+      <p class="abstract">Persistent memory turns prior interactions into durable agent state, but existing systems provide limited control over whether that state remains valid and whether it should influence a later query. We argue that reliable memory requires governance over both state formation and query-time influence. We introduce <strong>PLACE</strong>, a factorized governance layer that adds write-side state certification and read-side authorization to a memory backend. A factorial evaluation on Mem0 with Qwen2.5-3B and Qwen2.5-7B isolates the contribution of each mechanism. Results show that write-side governance substantially improves lifecycle state correctness, while read-side governance eliminates measured causal leakage from ineligible memory in the state-correct setting. Their combination achieves the strongest joint performance while preserving query-relevant support. These findings show that reliable persistent memory requires explicit control over both maintained state and query-time information influence.</p>
+    </section>
 
-      <p class="finding-description">
-        PLACEHOLDER FINDING 1 DESCRIPTION.
-        Explain the result and the main interpretation in approximately
-        2–4 sentences.
-      </p>
+    <section id="contributions" aria-labelledby="contributions-title">
+      <h2 id="contributions-title">Key Contributions</h2>
+      <ul class="contributions">
+        <li><strong>Two complementary governance requirements.</strong> We distinguish whether persistent memory represents the correct current semantic state from whether represented memory is eligible to influence a specific query.</li>
+        <li><strong>Certifying Write-Side State (CSS).</strong> A governed transition uses trusted user-level events to update the memory backend and verifies the resulting state through physical readback.</li>
+        <li><strong>Query-Authorized Semantic Closure (QASC).</strong> A read-only authorization layer constructs query-eligible, model-visible support from physically represented memory; it does not invent missing facts or rewrite storage.</li>
+        <li><strong>Controlled factorial evaluation.</strong> We isolate write-side and read-side effects across two model sizes, six governance families, paired causal worlds, and targeted utility and Closed-Loop diagnostics.</li>
+      </ul>
+    </section>
 
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 1 PLACEHOLDER
+    <section id="framework" aria-labelledby="framework-title">
+      <h2 id="framework-title">Framework</h2>
+      <p>PLACE is a lightweight governance layer around an existing persistent-memory backend. <span class="keyword">CSS</span> governs which state should be current and verifies what is actually stored; <span class="keyword">QASC</span> determines which physically supported facts are authorized for the current query. Both mechanisms operate separately from the answer model.</p>
+      <p>In the example below, a flight originally scheduled for 9:00 is changed to 11:00. CSS marks 11:00 as current. QASC permits the current time and relevant provenance to reach the answer model, while filtering the superseded 9:00 value from a current-time response.</p>
+      <figure class="framework-figure">
+        <div class="figure-frame"><img src="assets/place-framework.webp" alt="PLACE framework. Trusted user events go through CSS to update and verify the memory state; trusted query events go through QASC to select authorized support. A Tokyo departure changes from 9:00 to 11:00, with the superseded time filtered before answer generation." width="1600" height="654" loading="lazy"></div>
+        <figcaption>PLACE separates write-side lifecycle state formation from read-side query-time influence. <a href="assets/place-framework.pdf" target="_blank" rel="noopener noreferrer">View full-resolution framework figure (PDF)</a>.</figcaption>
+      </figure>
+    </section>
+
+    <section id="evaluation" aria-labelledby="evaluation-title">
+      <h2 id="evaluation-title">Evaluation at a Glance</h2>
+      <p>The evaluation crosses two write policies (Native and CSS) with two read policies (Native and QASC), yielding four conditions: <strong>Native</strong>, <strong>CSS</strong>, <strong>QASC</strong>, and <strong>PLACE</strong>. Primary experiments use trusted event and query semantics so governance can be evaluated independently of automatic semantic interpretation.</p>
+      <div class="setup-grid" aria-label="Experimental scope">
+        <div class="setup-item"><span class="setup-value">302</span><span class="setup-label">interaction turns</span></div>
+        <div class="setup-item"><span class="setup-value">4</span><span class="setup-label">conversation blocks in one trajectory</span></div>
+        <div class="setup-item"><span class="setup-value">105</span><span class="setup-label">post-event state checkpoints</span></div>
+        <div class="setup-item"><span class="setup-value">48</span><span class="setup-label">Primary queries; 48 causal pairs evaluated separately</span></div>
       </div>
+      <p class="small muted">Models: Qwen2.5-7B and Qwen2.5-3B. Backend: Mem0 with Qdrant. The six governance families are supersession, scope, permission, authority, dependency, and epistemic state. The controlled experiments comprise one prespecified longitudinal trajectory, not multiple independent trajectories.</p>
+    </section>
 
-    </div>
+    <section id="findings" aria-labelledby="findings-title">
+      <h2 id="findings-title">Main Findings</h2>
 
+      <article class="finding" id="finding-1">
+        <div class="finding-number">Finding 01 · Write-side governance</div>
+        <h3>CSS maintains the correct persistent state across the trajectory</h3>
+        <p class="finding-description">Longitudinal StateCorrectness rises from <strong>0.488 to 1.000</strong> for 7B and from <strong>0.414 to 1.000</strong> for 3B. Because QASC does not write memory, Native and QASC share the Native-produced state, while CSS and PLACE share the CSS-produced state. This factorization is verified at all 105 post-event and 48 pre-query checkpoints.</p>
+        <div class="result-grid">
+          <div class="result-panel"><h4>Qwen2.5-7B · StateCorrectness</h4>
+            <div class="comparison"><div class="row-label"><span>Native / QASC</span><strong>0.488</strong></div><div class="bar-track"><span class="bar" style="width:48.8%"></span></div></div>
+            <div class="comparison"><div class="row-label"><span>CSS / PLACE</span><strong>1.000</strong></div><div class="bar-track"><span class="bar emphasis" style="width:100%"></span></div></div>
+            <p class="result-note">StateGain: +0.512</p>
+          </div>
+          <div class="result-panel"><h4>Qwen2.5-3B · StateCorrectness</h4>
+            <div class="comparison"><div class="row-label"><span>Native / QASC</span><strong>0.414</strong></div><div class="bar-track"><span class="bar" style="width:41.4%"></span></div></div>
+            <div class="comparison"><div class="row-label"><span>CSS / PLACE</span><strong>1.000</strong></div><div class="bar-track"><span class="bar emphasis" style="width:100%"></span></div></div>
+            <p class="result-note">StateGain: +0.586</p>
+          </div>
+        </div>
+        <p class="caption">StateCorrectness is F1 against the reference semantic state over 105 longitudinal post-event checkpoints; it is not answer accuracy.</p>
+      </article>
 
-    <!-- ================= FINDING 2 ================= -->
+      <article class="finding" id="finding-2">
+        <div class="finding-number">Finding 02 · Read-side authorization</div>
+        <h3>QASC eliminates measured causal leakage when the stored state is correct</h3>
+        <p class="finding-description">CSS and PLACE are the cleanest read-side contrast: all <strong>48 causal pairs</strong> are eligible under both, and the authorized states are reference-correct within each paired-world comparison. Replacing Native reading with QASC reduces LeakageRate from <strong>0.125 to 0.000</strong> at 7B and <strong>0.083 to 0.000</strong> at 3B. This is measured leakage on the tested pairs, not a guarantee that leakage is impossible in other settings.</p>
+        <div class="table-scroll"><table aria-label="Causal leakage results"><thead><tr><th scope="col">Model</th><th scope="col">CSS (native read)</th><th scope="col">PLACE (QASC read)</th><th scope="col">LeakageDrop</th><th scope="col">95% pair-bootstrap interval</th></tr></thead><tbody>
+          <tr><td>7B</td><td>0.125 (n=48)</td><td><strong>0.000 (n=48)</strong></td><td>0.125</td><td>[0.042, 0.229]</td></tr>
+          <tr><td>3B</td><td>0.083 (n=48)</td><td><strong>0.000 (n=48)</strong></td><td>0.083</td><td>[0.021, 0.167]</td></tr>
+        </tbody></table></div>
+        <p class="caption">A causal pair is included only when both worlds have the same reference-correct authorized state. Native and QASC have smaller eligible denominators due to write-side state errors; their zero leakage values are not the primary read-side comparison.</p>
+      </article>
 
-    <div class="finding">
+      <article class="finding" id="finding-3">
+        <div class="finding-number">Finding 03 · Factorial combination</div>
+        <h3>Combining CSS and QASC yields the strongest strict joint performance</h3>
+        <p class="finding-description">PLACE achieves JointSuccess of <strong>0.667 at 7B</strong> and <strong>0.625 at 3B</strong>, versus 0.417 and 0.354 for CSS alone; QASC alone cannot repair an incorrect Native state. InteractionGain is +0.250 (7B) and +0.271 (3B). These are within-trajectory sensitivity results, not population-level evidence of statistical synergy.</p>
+        <div class="table-scroll"><table aria-label="Main factorial answer and joint results"><thead><tr><th scope="col">Condition</th><th scope="col">7B AnswerCorrectness</th><th scope="col">7B JointSuccess</th><th scope="col">3B AnswerCorrectness</th><th scope="col">3B JointSuccess</th></tr></thead><tbody>
+          <tr><td>Native</td><td>0.682</td><td>0.000</td><td>0.451</td><td>0.000</td></tr>
+          <tr><td>CSS</td><td><strong>0.793</strong></td><td>0.417</td><td>0.618</td><td>0.354</td></tr>
+          <tr><td>QASC</td><td>0.653</td><td>0.000</td><td>0.410</td><td>0.000</td></tr>
+          <tr class="emphasis-row"><td>PLACE</td><td>0.713</td><td><strong>0.667</strong></td><td><strong>0.654</strong></td><td><strong>0.625</strong></td></tr>
+        </tbody></table></div>
+        <p class="caption">JointSuccess requires correct query state, authorized and sufficient support, no governance violation, and a correct answer. PLACE does not dominate AnswerCorrectness: at 7B, CSS scores 0.793 versus PLACE's 0.713.</p>
+      </article>
 
-      <div class="finding-number">
-        Finding 2
-      </div>
+      <article class="finding" id="finding-4">
+        <div class="finding-number">Finding 04 · Targeted diagnostics</div>
+        <h3>Authorization preserves needed support and carries into Closed Loop</h3>
+        <p class="finding-description">Reducing ineligible exposure does not require suppressing all memory. PLACE retains <strong>1.000 NeededSupport</strong> on applicable Utility probes (15/15 per scale), while reporting <strong>0.000 ExposureRate</strong>. In Closed Loop, prior assistant responses remain in non-authoritative dialogue context; PLACE still maintains state correctness and exposure control, although 3B JointSuccess is lower than in Primary.</p>
+        <div class="result-grid">
+          <div class="result-panel"><h4>Read-side Utility · PLACE</h4><div class="table-scroll"><table aria-label="PLACE utility diagnostics"><thead><tr><th>Model</th><th>NeededSupport</th><th>ExposureRate</th><th>ConflictHarm</th></tr></thead><tbody><tr><td>7B</td><td><strong>1.000</strong></td><td><strong>0.000</strong></td><td>0.042</td></tr><tr><td>3B</td><td><strong>1.000</strong></td><td><strong>0.000</strong></td><td>0.000</td></tr></tbody></table></div><p class="result-note">Nine of 24 nominal needed-support probes per scale have no applicable authorized fact and are excluded from the NeededSupport denominator.</p></div>
+          <div class="result-panel"><h4>Closed Loop · PLACE</h4><div class="table-scroll"><table aria-label="PLACE closed-loop diagnostics"><thead><tr><th>Model</th><th>StateCorrectness</th><th>ExposureRate</th><th>JointSuccess</th></tr></thead><tbody><tr><td>7B</td><td>1.000</td><td>0.000</td><td><strong>0.667</strong></td></tr><tr><td>3B</td><td>1.000</td><td>0.000</td><td><strong>0.458</strong></td></tr></tbody></table></div><p class="result-note">Closed Loop retains earlier assistant replies in dialogue; its JointSuccess need not equal the Primary result.</p></div>
+        </div>
+        <p class="caption">ConflictHarm is an indicator of conflicting injected evidence appearing in an incorrect answer; it is not an identified causal contribution of that evidence.</p>
+      </article>
 
-      <h3>
-        PLACEHOLDER FINDING 2 TITLE
-      </h3>
+      <article class="finding" id="finding-5">
+        <div class="finding-number">Finding 05 · Governance-family robustness</div>
+        <h3>The gains extend across all six governance families</h3>
+        <p class="finding-description">PLACE achieves <strong>State@Query F1 = 1.000</strong> and <strong>LeakageRate = 0.000</strong> across every family at both scales; each PLACE family has eight eligible causal pairs. JointSuccess is positive in all six families, but not uniform: <strong>dependency</strong> is the weakest (0.375 at 7B; 0.250 at 3B). This pinpoints remaining downstream difficulty even when state formation and authorization are correct.</p>
+        <div class="table-scroll"><table aria-label="Per-family joint success"><thead><tr><th rowspan="2" scope="col">Family</th><th colspan="2" scope="colgroup">7B JointSuccess</th><th colspan="2" scope="colgroup">3B JointSuccess</th></tr><tr><th scope="col">CSS</th><th scope="col">PLACE</th><th scope="col">CSS</th><th scope="col">PLACE</th></tr></thead><tbody>
+          <tr><td>Supersession</td><td>0.250</td><td><strong>0.875</strong></td><td>0.250</td><td><strong>0.875</strong></td></tr>
+          <tr><td>Scope</td><td>0.375</td><td><strong>0.625</strong></td><td>0.375</td><td><strong>0.625</strong></td></tr>
+          <tr><td>Permission</td><td>0.625</td><td><strong>0.750</strong></td><td>0.250</td><td><strong>0.750</strong></td></tr>
+          <tr><td>Authority</td><td>0.625</td><td><strong>0.625</strong></td><td>0.750</td><td><strong>0.750</strong></td></tr>
+          <tr><td>Dependency</td><td>0.250</td><td><strong>0.375</strong></td><td>0.125</td><td><strong>0.250</strong></td></tr>
+          <tr><td>Epistemic</td><td>0.375</td><td><strong>0.750</strong></td><td>0.375</td><td><strong>0.500</strong></td></tr>
+        </tbody></table></div>
+        <p class="caption">Each family includes eight Primary queries. State@Query F1 measures pre-query state quality, distinct from the main paper's 105-checkpoint longitudinal StateCorrectness. Full Native/CSS/QASC/PLACE family values appear in the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplement</a>.</p>
+      </article>
 
-      <p class="finding-description">
-        PLACEHOLDER FINDING 2 DESCRIPTION.
-      </p>
+      <article class="finding" id="finding-6">
+        <div class="finding-number">Finding 06 · Automatic parsing</div>
+        <h3>Semantic interpretation remains a bottleneck outside the trusted-semantics setting</h3>
+        <p class="finding-description">Primary isolates governance with trusted event and query interpretations. In a separate 24-case diagnostic, automatic parsing substantially reduces support and joint correctness. Event-field F1 is 0.776 / 0.456 and query-field F1 is 0.468 / 0.259 at 7B / 3B; transition agreement is 0.583 / 0.000. These parser limits motivate future end-to-end evaluation and should not be conflated with the controlled Primary results.</p>
+        <div class="table-scroll"><table aria-label="Parser downstream sensitivity"><thead><tr><th rowspan="2" scope="col">Input semantics</th><th colspan="2" scope="colgroup">7B</th><th colspan="2" scope="colgroup">3B</th></tr><tr><th scope="col">SupportCorrectness</th><th scope="col">JointSuccess</th><th scope="col">SupportCorrectness</th><th scope="col">JointSuccess</th></tr></thead><tbody>
+          <tr><td>TT · Trusted event, trusted query</td><td>1.000</td><td>0.333</td><td>1.000</td><td>0.292</td></tr>
+          <tr><td>PT · Parsed event, trusted query</td><td>0.329</td><td>0.000</td><td>0.269</td><td>0.000</td></tr>
+          <tr><td>TP · Trusted event, parsed query</td><td>0.502</td><td>0.250</td><td>0.333</td><td>0.125</td></tr>
+          <tr><td>PP · Parsed event, parsed query</td><td>0.250</td><td>0.000</td><td>0.278</td><td>0.000</td></tr>
+        </tbody></table></div>
+        <p class="caption">TT is a diagnostic-subset control, not the full 48-query PLACE baseline. Structural parser metrics are distinct from answer-dependent strict-general scoring.</p>
+      </article>
 
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 2 PLACEHOLDER
-      </div>
+      <article class="finding" id="finding-7">
+        <div class="finding-number">Finding 07 · Supplementary cross-checks</div>
+        <h3>Visible support helps, but does not guarantee correct final answers</h3>
+        <p class="finding-description">A separate read-only validation of the frozen Primary responses checks conventional similarity and factual/support use. PLACE yields the highest Token F1 at both scales (0.174 / 0.179) and nearly complete required-support visibility (0.989 / 0.989). Yet Support-to-Answer Recall is only 0.497 / 0.614, indicating that available information is not always fully used in the answer. Conventional metrics also need not rank conditions the same way as strict governance JointSuccess.</p>
+        <div class="result-grid">
+          <div class="result-panel"><h4>Conventional answer quality · PLACE</h4><div class="table-scroll"><table aria-label="Conventional answer quality for PLACE"><thead><tr><th>Model</th><th>Token F1</th><th>ROUGE-L F1</th><th>chrF</th><th>BERTScore F1</th></tr></thead><tbody><tr><td>7B</td><td>0.174</td><td>0.150</td><td>0.273</td><td>0.845</td></tr><tr><td>3B</td><td>0.179</td><td>0.162</td><td>0.324</td><td>0.845</td></tr></tbody></table></div><p class="result-note">At 3B, CSS slightly exceeds PLACE in BERTScore F1 (0.846 vs. 0.845) and BLEU-4 (0.154 vs. 0.106).</p></div>
+          <div class="result-panel"><h4>Factual and support checks · PLACE</h4><div class="table-scroll"><table aria-label="Factual support for PLACE"><thead><tr><th>Model</th><th>Value F1</th><th>Support visible recall</th><th>Support-to-answer recall</th></tr></thead><tbody><tr><td>7B</td><td>0.529</td><td>0.989</td><td>0.497</td></tr><tr><td>3B</td><td>0.640</td><td>0.989</td><td>0.614</td></tr></tbody></table></div><p class="result-note">Support and factual-value checks use the applicable auxiliary probes, not the V32 governance AnswerCorrectness definition.</p></div>
+        </div>
+        <p class="caption">These are archived auxiliary, post-hoc metrics on frozen outputs, not model reruns and not replacements for strict-general AnswerCorrectness. The complete four-condition tables are in the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplementary material</a>.</p>
+      </article>
+    </section>
 
-    </div>
+    <section id="limitations" aria-labelledby="limitations-title">
+      <h2 id="limitations-title">Scope and Interpretation</h2>
+      <p>These results establish the behavior of PLACE in a <strong>controlled, trusted-semantics evaluation</strong>. They do not yet demonstrate a fully automatic end-to-end agent, independence across multiple longitudinal trajectories, or population-level guarantees. StateCorrectness and State@Query F1 are different checkpoint metrics. LeakageRate is measured only on eligible paired worlds; a zero reported value does not imply zero risk in every possible history.</p>
+      <p>The V32 strict-general paper-facing evaluator directly covers <strong>42 of 48</strong> Primary answer obligations; six legacy queries use frozen compatibility scores to preserve the prespecified denominator. The archived evaluator therefore marks this campaign as <strong>not yet fully confirmatory-ready</strong> under its full-coverage criterion. Conventional answer-quality and support-use cross-checks were computed separately on the same frozen responses.</p>
+      <p class="note">For precise metric definitions, eligibility criteria, evaluator limitations, and all supplementary tables, consult the <a href="assets/PLACE_Supplementary_V32.pdf" target="_blank" rel="noopener noreferrer">supplementary PDF</a>. The StateGain and InteractionGain intervals in the main paper are within-trajectory sensitivity intervals; the causal-pair leakage intervals use pair-level bootstrap resampling.</p>
+    </section>
 
+    <section id="citation" aria-labelledby="citation-title">
+      <h2 id="citation-title">Citation</h2>
+      <p>If you find this research useful, please cite the manuscript. Publication details can be updated when a public paper record becomes available.</p>
+      <div class="cite-box"><pre><code>@misc{hu2026memoryknowplace,
+  title  = {Memory, Know Your PLACE: Governing Lifecycle State and
+            Query-Time Eligibility in Persistent-Memory Agents},
+  author = {Hu, Chen-Fang and Shuai, Hong-Han and Chien, Woan-Shiuan},
+  year   = {2026},
+  note   = {Manuscript submitted for review}
+}</code></pre></div>
+    </section>
+  </main>
 
-    <!-- ================= FINDING 3 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 3
-      </div>
-
-      <h3>
-        PLACEHOLDER FINDING 3 TITLE
-      </h3>
-
-      <p class="finding-description">
-        PLACEHOLDER FINDING 3 DESCRIPTION.
-      </p>
-
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 3 PLACEHOLDER
-      </div>
-
-    </div>
-
-
-    <!-- ================= FINDING 4 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 4
-      </div>
-
-      <h3>
-        PLACEHOLDER FINDING 4 TITLE
-      </h3>
-
-      <p class="finding-description">
-        PLACEHOLDER FINDING 4 DESCRIPTION.
-      </p>
-
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 4 PLACEHOLDER
-      </div>
-
-    </div>
-
-
-    <!-- ================= FINDING 5 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 5
-      </div>
-
-      <h3>
-        PLACEHOLDER FINDING 5 TITLE
-      </h3>
-
-      <p class="finding-description">
-        PLACEHOLDER FINDING 5 DESCRIPTION.
-      </p>
-
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 5 PLACEHOLDER
-      </div>
-
-    </div>
-
-
-    <!-- ================= FINDING 6 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 6
-      </div>
-
-      <h3>
-        PLACEHOLDER FINDING 6 TITLE
-      </h3>
-
-      <p class="finding-description">
-        PLACEHOLDER FINDING 6 DESCRIPTION.
-      </p>
-
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 6 PLACEHOLDER
-      </div>
-
-    </div>
-
-
-    <!-- ================= FINDING 7 ================= -->
-
-    <div class="finding">
-
-      <div class="finding-number">
-        Finding 7
-      </div>
-
-      <h3>
-        PLACEHOLDER FINDING 7 TITLE
-      </h3>
-
-      <p class="finding-description">
-        PLACEHOLDER FINDING 7 DESCRIPTION.
-      </p>
-
-      <div class="image-placeholder">
-        RESULT IMAGE / TABLE 7 PLACEHOLDER
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       BIBTEX
-       ===================================================== -->
-
-  <section>
-
-    <h2>Citation</h2>
-
-    <p>
-      If you find this work useful, please consider citing:
-    </p>
-
-    <pre>
-@inproceedings{memoryknowyourplace2026,
-  title     = {Memory, Know Your PLACE: Governing Lifecycle State and
-               Query-Time Eligibility in Persistent-Memory Agents},
-  author    = {PLACEHOLDER AUTHORS},
-  booktitle = {PLACEHOLDER VENUE},
-  year      = {PLACEHOLDER YEAR}
-}
-    </pre>
-
-  </section>
-
-
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-
-  <footer>
-    Memory, Know Your PLACE · National Yang Ming Chiao Tung University
-  </footer>
-
+  <footer>Memory, Know Your PLACE · National Yang Ming Chiao Tung University · <a href="#top">Back to top</a></footer>
 </div>
-
 </body>
 </html>
